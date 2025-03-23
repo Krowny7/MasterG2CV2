@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Page en Construction{% endblock %}
+
+{% block head_extras %}
+<style>
+  /* Conteneur principal */
+  .wip-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  /* Icône ou image */
+  .wip-icon {
+    width: 120px;
+    height: auto;
+    margin: 0 auto 20px auto;
+    display: block;
+  }
+
+  /* Titre principal */
+  .wip-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+    letter-spacing: 1px;
+  }
+
+  /* Sous-titre ou description */
+  .wip-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  /* Barre de progression illustrative */
+  .progress-bar {
+    position: relative;
+    width: 80%;
+    height: 20px;
+    margin: 0 auto 30px auto;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-bar .progress {
+    width: 50%; /* Ajustez pour donner l'impression d'avancement */
+    height: 100%;
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    animation: gradientMove 5s linear infinite;
+  }
+
+  /* Bouton de retour */
+  .wip-return-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #F0122D;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+  }
+  .wip-return-btn:hover {
+    background-color: #54060f;
+  }
+
+  /* Animation pour la barre de progression */
+  @keyframes gradientMove {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 200%;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="wip-container">
+    <!-- Icône ou illustration -->
+
+    <h1 class="wip-title">Page en Construction</h1>
+
+    <p class="wip-subtitle">
+      Nous travaillons actuellement sur cette section pour vous offrir une expérience encore plus riche. 
+      Merci de votre patience ! Revenez bientôt pour découvrir les nouveautés.
+    </p>
+
+    <!-- Barre de progression illustrative -->
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+
+    <a href="{{ url_for('index') }}" class="wip-return-btn">Retour à l'accueil</a>
+  </div>
+</main>
+{% endblock %}

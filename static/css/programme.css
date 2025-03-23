@@ -1,0 +1,534 @@
+/* ========================================================================
+ * Table des matières:
+ * 
+ * 1. Styles Globaux et Conteneurs généraux
+ * 2. Header de la Page
+ * 3. Image Hero
+ * 4. Timeline (alternance via nth-child)
+ * 5. Section des Semestres
+ * 6. Section des Partenariats
+ * 7. Section des Points Forts (Highlights)
+ * 8. Section Candidature
+ * 9. Media Queries et Responsive Design
+ * 10. Animations et Clés
+ * ======================================================================== */
+
+/* ========================================================================
+ * 1. Styles Globaux et Conteneurs généraux
+ * ======================================================================== */
+
+
+/* Applique un fond gris clair sur toute la page */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Container général */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+/* ========================================================================
+ * 3. Image Hero
+ * ======================================================================== */
+
+.hero-image-container {
+    width: 100%;
+    height: 300px;
+    max-width: 1300px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.library-image {
+    width: 120%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================================================
+ * 4. Timeline (alternance via nth-child)
+ * ======================================================================== */
+
+.timeline-container {
+    position: relative;
+    margin: 50px auto;
+    padding: 20px 0;
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Ligne centrale */
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    top: 0; 
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    background-color: #e0e0e0;
+    z-index: 1;
+}
+
+/* Items */
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+/* Éléments impairs (1er, 3ᵉ, 5ᵉ...) : gauche */
+.timeline-item:nth-child(odd) {
+    left: 0;
+    text-align: right;
+    transform: translateX(0%);
+}
+
+/* Éléments pairs (2ᵉ, 4ᵉ, 6ᵉ...) : droite */
+.timeline-item:nth-child(even) {
+    left: 50%;
+    text-align: left;
+    transform: translateX(0%);
+}
+
+/* Contenu de chaque item */
+.timeline-content {
+    position: relative;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Points (connecteurs) sur la ligne */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: #F0122D;
+    border-radius: 50%;
+    z-index: 2;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Points à gauche (odd) */
+.timeline-item:nth-child(odd)::before {
+    right: -10px;
+}
+
+/* Points à droite (even) */
+.timeline-item:nth-child(even)::before {
+    left: -10px;
+}
+
+/* Hover sur le point */
+.timeline-item:hover::before {
+    background-color: #54060f;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Hover sur la box */
+.timeline-content:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Titres / paragraphes */
+.timeline-content h4 {
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    color: #333;
+}
+
+.timeline-content p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #666;
+}
+
+/* ========================================================================
+ * 5. Section des Semestres
+ * ======================================================================== */
+
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin: 30px 0;
+    color: #1c1e22;
+}
+
+.semester-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.semester-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 35%;
+    height: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.semester-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.semester-title {
+    font-size: 1.5rem;
+    color: #1c1e22;
+    margin-bottom: 20px;
+}
+
+.semester-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.semester-list li {
+    font-size: 1rem;
+    color: #555555;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* ========================================================================
+ * 6. Section des Partenariats
+ * ======================================================================== */
+
+ .partnership-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  
+  .partnership-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 35%;
+    max-width: 600px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .partnership-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .partnership-image {
+    width: 100%;
+    height: 200px;       /* Hauteur fixe pour les deux images */
+    object-fit: cover;   /* Remplit tout le cadre, sans bande blanche */
+    border-bottom: 4px solid #F0122D;
+    display: block;
+    background-color: transparent;
+  }
+  
+  .partnership-content {
+    padding: 20px;
+    text-align: left;
+  }
+  
+  .partnership-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    letter-spacing: 1.5px;
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 20s linear infinite;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  .partnership-description {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #1c1e22;
+    margin-bottom: 20px;
+    text-align: justify;
+  }
+  
+  .partnership-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .partnership-list li {
+    font-size: 1rem;
+    color: #333333;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .partnership-list li::before {
+    content: "✔";
+    color: #54060f;
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+  
+
+/* ========================================================================
+ * 7. Section des Points Forts (Highlights)
+ * ======================================================================== */
+
+.highlights-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.highlight-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.highlight-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.highlight-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.highlight-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #1c1e22;
+}
+
+.highlight-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555555;
+}
+
+/* ========================================================================
+ * 8. Section Candidature
+ * ======================================================================== */
+
+.candidature-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 20px auto;
+}
+
+/* Exemple de style pour un bouton standard */
+.button-standard {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #F0122D;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+.button-standard:hover {
+    background-color: #54060f;
+}
+
+/* ========================================================================
+ * 9. Media Queries et Responsive Design
+ * ======================================================================== */
+
+/* --- Semestres (responsive) --- */
+@media (max-width: 768px) {
+    .semester-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .semester-card {
+        width: 90%;
+        height: auto;
+    }
+}
+
+/* --- Partenariats (responsive) --- */
+@media (max-width: 768px) {
+    .partnership-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .partnership-card {
+        width: 90%;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .partnership-image {
+        margin: 0 auto;
+    }
+    .partnership-title {
+        text-align: center;
+    }
+    .partnership-description {
+        text-align: justify;
+    }
+}
+
+/* --- Points forts (responsive) --- */
+@media (max-width: 768px) {
+    .highlights-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .highlight-card {
+        width: 90%;
+    }
+}
+
+/* --- Section candidature (responsive) --- */
+@media (max-width: 768px) {
+    .candidature-container {
+        text-align: center;
+        padding: 20px;
+    }
+    .candidature-container .section-title {
+        font-size: 1.5rem;
+        line-height: 1.2;
+        margin-bottom: 8px;
+    }
+    .candidature-container .partnership-description {
+        font-size: 1rem;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+    .button-standard {
+        font-size: 1rem;
+        padding: 10px 20px;
+        display: inline-block;
+        margin: 0 auto;
+    }
+}
+
+/* --- Header & Hero (responsive) --- */
+@media (max-width: 768px) {
+    .page-header {
+        padding-top: 40px; /* Ajustez selon vos préférences */
+        padding-bottom: 20px;
+    }
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    .page-header p {
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+    .hero-image-container {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+    }
+    .library-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+}
+
+/* --- Timeline (responsive) --- */
+@media (max-width: 768px) {
+    .timeline-container::before {
+        top: 0;
+        bottom: 0;
+    }
+    .timeline-item {
+        width: 100%;
+        transform: none;
+        text-align: left;
+    }
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+    .timeline-item:nth-child(odd)::before,
+    .timeline-item:nth-child(even)::before {
+        left: 20px;
+        right: auto;
+    }
+    .timeline-content {
+        margin-left: 60px; /* Laisse de la place au bullet */
+    }
+}
+
+/* --- Tablettes (responsive) --- */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .page-header {
+        padding: 30px 15px;
+    }
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+    .page-header p {
+        font-size: 1.1rem;
+    }
+    .hero-image-container {
+        height: 250px;
+    }
+}
+
+/* ========================================================================
+ * 10. Animations et Clés
+ * ======================================================================== */
+
+/* Animation du dégradé pour le header et le titre des partenariats */
+@keyframes gradientMove {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 100%;
+    }
+}

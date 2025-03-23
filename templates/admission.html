@@ -1,0 +1,148 @@
+{% extends "base.html" %} 
+{% block title %}
+Admissions - Master G2C
+{% endblock %}
+
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admission.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+    <div class="container">
+        <h1>Admissions Master G2C</h1>
+        <p>Rejoignez une formation d'excellence en Gestion d'Actifs, Contrôle des Risques et Conformité</p>
+    </div>
+</header>
+
+<section class="section">
+    <h2 class="section-title">Processus d'admission</h2>
+    <div class="timeline-container2" style="margin-top: 50px;">
+        <div class="timeline-item left">
+            <div class="timeline-content" style="padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                <h4>Phase 1: Dépôt des candidatures</h4>
+                <p>Du 1er février au 31 mars</p>
+                <ul class="semester-list">
+                    <li>Création du dossier en ligne</li>
+                    <li>Upload des documents requis</li>
+                    <li>Validation de la candidature</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item right">
+            <div class="timeline-content" style="padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                <h4>Phase 2: Étude des dossiers</h4>
+                <p>Du 1er au 15 avril</p>
+                <ul class="semester-list">
+                    <li>Analyse du parcours académique</li>
+                    <li>Évaluation des compétences</li>
+                    <li>Présélection des candidats</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item left">
+            <div class="timeline-content" style="padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                <h4>Phase 3: Entretiens</h4>
+                <p>Du 15 avril au 15 mai</p>
+                <ul class="semester-list">
+                    <li>Entretien de motivation</li>
+                    <li>Test d'anglais</li>
+                    <li>Étude de cas</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item right">
+            <div class="timeline-content" style="padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                <h4>Phase 4: Résultats</h4>
+                <p>Fin mai</p>
+                <ul class="semester-list">
+                    <li>Annonce des admissions</li>
+                    <li>Confirmation d'inscription</li>
+                    <li>Finalisation du dossier</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="admission-requirements">
+    <h2 class="section-title">Prérequis</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-lg-3 requirement-card">
+                <h3 class="requirement-title">Prérequis académiques</h3>
+                <ul class="requirement-list">
+                    <li>Licence en économie, gestion, mathématiques ou équivalent</li>
+                    <li>Excellent dossier académique</li>
+                    <li>Maîtrise des outils quantitatifs</li>
+                </ul>
+            </div>
+            <div class="col-md-5 col-lg-3 requirement-card">
+                <h3 class="requirement-title">Compétences linguistiques</h3>
+                <ul class="requirement-list">
+                    <li>Niveau B2 en anglais recommandé</li>
+                    <li>TOEFL, IELTS ou équivalent apprécié</li>
+                    <li>Capacité à suivre des cours en anglais</li>
+                </ul>
+            </div>
+            <div class="col-md-5 col-lg-3 requirement-card">
+                <h3 class="requirement-title">Expérience professionnelle</h3>
+                <ul class="requirement-list">
+                    <li>Stages en entreprise appréciés</li>
+                    <li>Expérience en finance un plus</li>
+                    <li>Projets académiques pertinents</li>
+                </ul>
+            </div>
+            <div class="col-md-5 col-lg-3 requirement-card">
+                <h3 class="requirement-title">Documents requis</h3>
+                <ul class="requirement-list">
+                    <li>CV détaillé</li>
+                    <li>Lettre de motivation</li>
+                    <li>Relevés de notes</li>
+                    <li>Diplômes et certifications</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="training-tools">
+    <div class="container">
+        <h2 class="section-title">Envie de s'entraîner avant l'entretien ?</h2>
+        <div class="highlights-container">
+            <div class="highlight-card timeline-item">
+                <div class="highlight-icon">
+                    <span>💻</span>
+                </div>
+                <h3 class="highlight-title">Plateforme intuitive</h3>
+                <p class="highlight-description">
+                    Entraînez-vous sur des cas pratiques et des concepts essentiels pour réussir votre candidature.
+                </p>
+            </div>
+            <div class="highlight-card timeline-item">
+                <div class="highlight-icon">
+                    <span>📊</span>
+                </div>
+                <h3 class="highlight-title">Testez vos connaissances</h3>
+                <p class="highlight-description">
+                    Accédez à des tests interactifs pour évaluer et renforcer vos compétences en finance.
+                </p>
+            </div>
+            <div class="highlight-card timeline-item">
+                <div class="highlight-icon">
+                    <span>🚀</span>
+                </div>
+                <h3 class="highlight-title">Préparation optimale</h3>
+                <p class="highlight-description">
+                    Optimisez vos chances de réussite aux entretiens grâce à notre outil conçu par nos étudians.
+                </p>
+            </div>
+        </div>
+        <div class="button-container">
+            <a href="https://www.exemple-site-finance.com" target="_blank" class="button-standard">Découvrir l'outil</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

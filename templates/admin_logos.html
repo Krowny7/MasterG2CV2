@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Gestion des Logos Partenaires{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Gestion des Logos Partenaires</h1>
+
+  <!-- Formulaire d'upload -->
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{ form.alt.label }}<br>
+      {{ form.alt(size=40) }}
+      {% for error in form.alt.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      {{ form.file.label }}<br>
+      {{ form.file() }}
+      {% for error in form.file.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+
+  <hr>
+
+  <!-- Liste des logos existants -->
+  <h2>Logos existants</h2>
+  <div class="logos-container" style="display: flex; flex-wrap: wrap;">
+    {% if logos %}
+      {% for logo in logos %}
+        <div class="logo-item" style="margin: 10px; border: 1px solid #ccc; padding: 10px; text-align: center;">
+          <img src="{{ url_for('static', filename='media/' ~ logo.filename) }}"
+               alt="{{ logo.alt }}"
+               style="max-width: 120px; max-height: 80px; display: block; margin-bottom: 5px;">
+          <p>{{ logo.alt }}</p>
+          <a href="{{ url_for('edit_logo', logo_id=logo.id) }}" class="btn btn-sm btn-secondary">Modifier</a>
+          <form action="{{ url_for('delete_logo', logo_id=logo.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce logo ?');">Supprimer</button>
+          </form>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Aucun logo pour le moment.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

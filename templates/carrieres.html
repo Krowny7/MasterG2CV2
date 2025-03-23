@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}
+Carrières - Master G2C
+{% endblock %}
+
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/carrieres.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% set career = homepage_content.get('career_section', {}) %}
+<!-- SECTION HERO -->
+<section id="career-hero" class="page-header">
+  <div class="container">
+    <h1 id="career-title">{{ career.get('hero', {}).get('title', "Carrières & Alumni") }}</h1>
+    <p id="career-subtitle">
+      {{ career.get('hero', {}).get('subtitle', "Découvrez les opportunités professionnelles qui s'offrent à vous après le Master G2C et où se trouvent nos anciens étudiants à travers le monde.") }}
+    </p>
+  </div>
+</section>
+
+<!-- SECTION MÉTIERS -->
+<section class="section career-jobs">
+  <h2 class="section-title">{{ career.get('jobs', {}).get('title', "Les Métiers après le Master G2C") }}</h2>
+  <div class="highlights-container career-jobs-container">
+    {% if career.get('jobs', {}).get('jobs') %}
+      {% for job in career.get('jobs', {}).get('jobs') %}
+      <div class="highlight-card">
+        <div class="highlight-icon">
+          <span>{{ job.icon }}</span>
+        </div>
+        <h3 class="highlight-title">{{ job.title }}</h3>
+        <ul class="strengths-list">
+          {% for detail in job.details %}
+          <li><span class="list-icon">•</span> {{ detail }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p>Aucun métier défini pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- SECTION STATISTIQUES -->
+<section id="career-stats" class="section">
+  <h2 id="career-stats-title" class="section-title">{{ career.get('stats', {}).get('title', "Chiffres Clés des Alumni") }}</h2>
+  <div id="career-stats-grid" class="key-points-container">
+    {% if career.get('stats', {}).get('items') %}
+      {% for stat in career.get('stats', {}).get('items') %}
+      <div class="stat3">
+        <span class="stat-value">{{ stat.value }}</span>
+        <span class="stat-label">{{ stat.label }}</span>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p>Aucune statistique disponible.</p>
+    {% endif %}
+  </div>
+</section>
+
+
+<section class="map-and-content-section">
+    <div class="container">
+        <h2 class="section-title">Découvrez où évoluent nos anciens étudiants</h2>
+        <div class="map-content-container-unique">
+            <!-- Carte à gauche -->
+            <div class="map-frame-unique">
+                <iframe
+                    src="https://iae-caen.millionroads.com/en/embed_iframe?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpYWUtY2FlbiIsInNjb3BlIjoicXVlcnkiLCJjZmciOiJ7XCJmaWx0ZXJzXCI6e1wieWVhcnNfcmFuZ2VcIjpcIlwiLFwiYXBwbGljYXRpb25cIjpcIjRmMzgwZjdhLTcyMmItNDYxNC1iZGRlLTAxMDMxZjI3OGQ4OFwiLFwib3B0aW9uYWxfbm9tZW5jbGF0dXJlc1wiOlwiMVwiLFwic3RhcnRfbl90eXBlXCI6XCJEaXBsb21hXCIsXCJsYW5nXCI6XCJlblwiLFwibmVlZF9jb250YWluc19hbmFseXRpY3NcIjpcIjRmMzgwZjdhLTcyMmItNDYxNC1iZGRlLTAxMDMxZjI3OGQ4OFwiLFwic3RhcnRcIjpcIlwifSxcInF1ZXJ5XCI6XCJjdXJyZW50LWxvY2FsaXphdGlvblwiLFwidW5pdFwiOlwibmJcIixcIm5vZGVcIjpcImY5ODIyOTIzLTQ4Y2EtNGU1Zi04MTZiLWIxOWZiNDMxZDdkYVwiLFwiZGFzaGJvYXJkQ29udGV4dFwiOlwiXCIsXCJzdHlsZXNcIjpcInNpbHZlclwiLFwiZW1iZWRfdHlwZVwiOlwiaWZyYW1lLWdtYXBcIixcImlmcmFtZVwiOlwiMVwiLFwibGltaXRcIjpcIjhcIixcImNoYXJ0X3R5cGVcIjpcImdtYXBcIixcInRva2VuXCI6XCJleUpoYkdjaU9pSlNVekkxTmlJc0luUjVjQ0lnT2lBaVNsZFVJaXdpYTJsa0lpQTZJQ0pEU0RoR1QxWlNXVzlaUnpkTWFEQktZbnB2U2xwR1ZraENWbXRLV25GcFoxQnRTRmxqTFRFM1dYWkpJbjAuZXlKbGVIQWlPakUzTXpNeU5qTTFORFFzSW1saGRDSTZNVGN6TXpJeU56VTBOU3dpWVhWMGFGOTBhVzFsSWpveE56TXpNakkzTlRRMExDSnFkR2tpT2lKbE5qQTJORGs1WkMweFl6QTVMVFF6TkRJdE9HRTRNQzAxTnpZNVpqWTNZekV3TXpjaUxDSnBjM01pT2lKb2RIUndjem92TDJsa0xtMXBiR3hwYjI1eWIyRmtjeTVqYjIwdllYVjBhQzl5WldGc2JYTXZhSFZ0WVc1eWIyRmtjeUlzSW1GMVpDSTZJbUZqWTI5MWJuUWlMQ0p6ZFdJaU9pSm1Pakl6TTJKaE1UWTBMVE5pWm1ZdE5EaGhNQzFpTWpaaUxXRTFaakF6TWpoa09HUm1ZanB6YkdsdExuTnZkV2x6YzJsQWRXNXBZMkZsYmk1bWNpSXNJblI1Y0NJNklrSmxZWEpsY2lJc0ltRjZjQ0k2SW1GdVlXeDVlbVV0Y0hKdlpDSXNJbTV2Ym1ObElqb2lZak5hYVZKRldtaGtVelV4WXpKT1YyVklWbXRUV0ZKdlQxVmthRlZFUlRSUldFWlVaRmRvZGxGcVVURlNSV2gyVkVWRk1WRldaRkJUYkdoeklpd2ljMlZ6YzJsdmJsOXpkR0YwWlNJNklqaGxZVEJpTldGbExUTXpZMlF0TkdWaU1DMWlaVE5oTFdVMllXSmtOVFF5WXpFeFlpSXNJbUZqY2lJNklqRWlMQ0poYkd4dmQyVmtMVzl5YVdkcGJuTWlPbHNpS2lKZExDSnlaWE52ZFhKalpWOWhZMk5sYzNNaU9uc2lZV05qYjNWdWRDSTZleUp5YjJ4bGN5STZXeUp0WVc1aFoyVXRZV05qYjNWdWRDSXNJbTFoYm1GblpTMWhZMk52ZFc1MExXeHBibXR6SWl3aWRtbGxkeTF3Y205bWFXeGxJbDE5ZlN3aWMyTnZjR1VpT2lKdmNHVnVhV1FnY0hKdlptbHNaU0JsYldGcGJDSXNJbVpwY25OMFRtRnRaU0k2SWxOc2FXMGlMQ0pzWVhOMFRtRnRaU0k2SWxOdmRXbHpjMmtpTENKbGJXRnBiRjkyWlhKcFptbGxaQ0k2ZEhKMVpTd2ljbTlzWlhNaU9sc2lZWEJ3WDIxaGJtRm5aWElpWFN3aWJtRnRaU0k2SWxOc2FXMGdVMjkxYVhOemFTSXNJbWR5YjNWd2N5STZXeUp0YjJSMWJHVmZZVzVoYkhsNlpTSmRMQ0p3Y21WbVpYSnlaV1JmZFhObGNtNWhiV1VpT2lKemJHbHRMbk52ZFdsemMybEFkVzVwWTJGbGJpNW1jaUlzSW1kcGRtVnVYMjVoYldVaU9pSlRiR2x0SWl3aWRYVnBaQ0k2SWpFeE16ZGxNMkpsTFRVM05EWXRORGt5TkMxaFltVmtMV1ZqWXpFM1pHRXdZakF6TlNJc0ltWmhiV2xzZVY5dVlXMWxJam9pVTI5MWFYTnphU0lzSW1WdFlXbHNJam9pYzJ4cGJTNXpiM1ZwYzNOcFFIVnVhV05oWlc0dVpuSWlMQ0poY0hCeklqcGJJa2xCUlNCRFlXVnVJbDE5LnA0SVJYX2loOGdxMEttbWx3ZEVjS1dYNXphMjl6R3l2b2k3blVDN2syVW13NGJadG5ualVFV25WV2tpRXJpbHZoSFhRbUpKN0Y1enNjUTRoTjFIaUhPckpSSkZhNk0tdlgxeDRmNWp2blp6anYwNTYwTlpDMF9Kbm1UNnFiNUV5cUNBRS1Lc01NSlRJenkxdG84eXlZaHFrbHl6MFhyc0tBa2ZPXzZtQXphUHFyenNJcEcxRExlOTlwTEdrX1R2SHpCb2RMbHJpbmhKeUFBTXJvakQxUDlxc011VEFxc282SXE2VzVKQlNPODN3Ym9WNkctVk04bmo4N2VtY3RaTENXQ0lDOFZJRHZGTzM3NG0wZmc3Q2tZN1E3TWw0N1ptX0ZPOTh0N0tuTFVNWHA4UXdxczFHYXN4Q2JxRTFIMDY5V0FMLXZicmpTZnZhOTJVNkpKR2I1QVwiLFwiY29udHJvbGxlclwiOlwiZnJvbnQvZW1iZWRcIixcImFjdGlvblwiOlwicHJldml6XCIsXCJsb2NhbGVcIjpcImVuXCIsXCJpZFwiOlwiYWxsXCIsXCJtYXhfYWdlXCI6XCI2MDBcIn0ifQ.EFS9HTMTQfk29VqiHwe3C-q_fjUV3j52f9aWsXowXiM"
+                    width="100%"
+                    height="400"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <!-- Contenu statique à droite -->
+            <div class="content-frame-unique">
+                <iframe
+                    src="https://iae-caen.millionroads.com/en/embed_iframe?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpYWUtY2FlbiIsInNjb3BlIjoicXVlcnkiLCJjZmciOiJ7XCJmaWx0ZXJzXCI6e1wieWVhcnNfcmFuZ2VcIjpcIlwiLFwib3B0aW9uYWxfbm9tZW5jbGF0dXJlc1wiOlwiMVwiLFwic3RhcnRfbl90eXBlXCI6XCJEaXBsb21hXCIsXCJsYW5nXCI6XCJlblwiLFwibmVlZF9jb250YWluc19hbmFseXRpY3NcIjpcIjRmMzgwZjdhLTcyMmItNDYxNC1iZGRlLTAxMDMxZjI3OGQ4OFwiLFwiYXBwbGljYXRpb25cIjpcIjRmMzgwZjdhLTcyMmItNDYxNC1iZGRlLTAxMDMxZjI3OGQ4OFwifSxcInF1ZXJ5XCI6XCJjdXJyZW50LWNvdW50cnlcIixcInVuaXRcIjpcIm5iXCIsXCJub2RlXCI6XCJmOTgyMjkyMy00OGNhLTRlNWYtODE2Yi1iMTlmYjQzMWQ3ZGFcIixcImRhc2hib2FyZENvbnRleHRcIjpcIlwiLFwidHJlbmRzXCI6XCJcIixcImVtYmVkX3R5cGVcIjpcImlmcmFtZS1saXN0XCIsXCJsaW1pdFwiOlwiOFwiLFwiY2hhcnRfdHlwZVwiOlwibGlzdFwiLFwidG9rZW5cIjpcImV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSWdPaUFpU2xkVUlpd2lhMmxrSWlBNklDSkRTRGhHVDFaU1dXOVpSemRNYURCS1lucHZTbHBHVmtoQ1ZtdEtXbkZwWjFCdFNGbGpMVEUzV1haSkluMC5leUpsZUhBaU9qRTNNek15TmpNMU5EUXNJbWxoZENJNk1UY3pNekl5TnpVME5Td2lZWFYwYUY5MGFXMWxJam94TnpNek1qSTNOVFEwTENKcWRHa2lPaUpsTmpBMk5EazVaQzB4WXpBNUxUUXpOREl0T0dFNE1DMDFOelk1WmpZM1l6RXdNemNpTENKcGMzTWlPaUpvZEhSd2N6b3ZMMmxrTG0xcGJHeHBiMjV5YjJGa2N5NWpiMjB2WVhWMGFDOXlaV0ZzYlhNdmFIVnRZVzV5YjJGa2N5SXNJbUYxWkNJNkltRmpZMjkxYm5RaUxDSnpkV0lpT2lKbU9qSXpNMkpoTVRZMExUTmlabVl0TkRoaE1DMWlNalppTFdFMVpqQXpNamhrT0dSbVlqcHpiR2x0TG5OdmRXbHpjMmxBZFc1cFkyRmxiaTVtY2lJc0luUjVjQ0k2SWtKbFlYSmxjaUlzSW1GNmNDSTZJbUZ1WVd4NWVtVXRjSEp2WkNJc0ltNXZibU5sSWpvaVlqTmFhVkpGV21oa1V6VXhZekpPVjJWSVZtdFRXRkp2VDFWa2FGVkVSVFJSV0VaVVpGZG9kbEZxVVRGU1JXaDJWRVZGTVZGV1pGQlRiR2h6SWl3aWMyVnpjMmx2Ymw5emRHRjBaU0k2SWpobFlUQmlOV0ZsTFRNelkyUXROR1ZpTUMxaVpUTmhMV1UyWVdKa05UUXlZekV4WWlJc0ltRmpjaUk2SWpFaUxDSmhiR3h2ZDJWa0xXOXlhV2RwYm5NaU9sc2lLaUpkTENKeVpYTnZkWEpqWlY5aFkyTmxjM01pT25zaVlXTmpiM1Z1ZENJNmV5SnliMnhsY3lJNld5SnRZVzVoWjJVdFlXTmpiM1Z1ZENJc0ltMWhibUZuWlMxaFkyTnZkVzUwTFd4cGJtdHpJaXdpZG1sbGR5MXdjbTltYVd4bElsMTlmU3dpYzJOdmNHVWlPaUp2Y0dWdWFXUWdjSEp2Wm1sc1pTQmxiV0ZwYkNJc0ltWnBjbk4wVG1GdFpTSTZJbE5zYVcwaUxDSnNZWE4wVG1GdFpTSTZJbE52ZFdsemMya2lMQ0psYldGcGJGOTJaWEpwWm1sbFpDSTZkSEoxWlN3aWNtOXNaWE1pT2xzaVlYQndYMjFoYm1GblpYSWlYU3dpYm1GdFpTSTZJbE5zYVcwZ1UyOTFhWE56YVNJc0ltZHliM1Z3Y3lJNld5SnRiMlIxYkdWZllXNWhiSGw2WlNKZExDSndjbVZtWlhKeVpXUmZkWE5sY201aGJXVWlPaUp6YkdsdExuTnZkV2x6YzJsQWRXNXBZMkZsYmk1bWNpSXNJbWRwZG1WdVgyNWhiV1VpT2lKVGJHbHRJaXdpZFhWcFpDSTZJakV4TXpkbE0ySmxMVFUzTkRZdE5Ea3lOQzFoWW1Wa0xXVmpZekUzWkdFd1lqQXpOU0lzSW1aaGJXbHNlVjl1WVcxbElqb2lVMjkxYVhOemFTSXNJbVZ0WVdsc0lqb2ljMnhwYlM1emIzVnBjM05wUUhWdWFXTmhaVzR1Wm5JaUxDSmhjSEJ6SWpwYklrbEJSU0JEWVdWdUlsMTkucDRJUlhfaWg4Z3EwS21tbHdkRWNLV1g1emEyOXpHeXZvaTduVUM3azJVbXc0Ylp0bm5qVUVXblZXa2lFcmlsdmhIWFFtSko3RjV6c2NRNGhOMUhpSE9ySlJKRmE2TS12WDF4NGY1anZuWnpqdjA1NjBOWkMwX0pubVQ2cWI1RXlxQ0FFLUtzTU1KVEl6eTF0bzh5eVlocWtseXowWHJzS0FrZk9fNm1BemFQcXJ6c0lwRzFETGU5OXBMR2tfVHZIekJvZExscmluaEp5QUFNcm9qRDFQOXFzTXVUQXFzbzZJcTZXNUpCU084M3dib1Y2Ry1WTThuajg3ZW1jdFpMQ1dDSUM4VklEdkZPMzc0bTBmZzdDa1k3UTdNbDQ3Wm1fRk85OHQ3S25MVU1YcDhRd3FzMUdhc3hDYnFFMUgwNjlXQUwtdmJyalNmdmE5MlU2SkpHYjVBXCIsXCJ3aXRoX290aGVyc1wiOlwidHJ1ZVwiLFwiY29sb3JcIjpcIlwifSJ9.7Z2WqKZq1kYqIpAhOacUNuTo8n-3sHBjRZdpvuuhVOI"
+                    width="100%"
+                    height="400"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        <p class="map-info-note">Données publiques non exhaustives</p>
+    </div>
+</section>
+
+
+<!-- SECTION VIDÉO -->
+<section class="video-section">
+    <div class="container">
+      <h2 class="section-title">
+        {{ career.get('video', {}).get('title', "Écoutez un témoignage en vidéo") }}
+      </h2>
+      <div class="video-frame">
+        {% set raw_url = career.get('video', {}).get('youtube_url', "https://www.youtube.com/watch?v=ZGnrqOTyC8E") %}
+        {% set embed_url = raw_url|replace("watch?v=", "embed/") %}
+        <iframe 
+            width="560" 
+            height="315" 
+            src="{{ embed_url }}" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- SECTION TÉMOIGNAGES -->
+  <section class="testimonials">
+    <div class="testimonials-container">
+      <h2 class="testimonials-title">
+        {{ homepage_content.testimonials_section.title or "Témoignages" }}
+      </h2>
+      <div class="testimonials-grid">
+        {% if homepage_content.testimonials_section["items"] %}
+          {% for t in homepage_content.testimonials_section["items"] %}
+            <article class="testimonial-card">
+              <p class="testimonial-text">{{ t.text }}</p>
+              <footer class="testimonial-author">{{ t.author }}</footer>
+            </article>
+          {% endfor %}
+        {% else %}
+          <p>Aucun témoignage pour le moment.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+<!-- Juste avant </main>, par exemple -->
+<section class="cta-section">
+    <h2 class="cta-title">PRÊT À NOUS REJOINDRE ?</h2>
+    <p class="cta-subtext">Découvrez le processus d’admission et postulez dès maintenant</p>
+    <a href="/admissions" class="button-standard cta-button">Candidater</a>
+  </section>
+  
+{% endblock %}

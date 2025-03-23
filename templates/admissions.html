@@ -1,0 +1,175 @@
+{% extends "base.html" %} 
+{% block title %}
+Admissions - Master G2C
+{% endblock %}
+
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admission.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% set admissions = homepage_content.get('admissions_section', {}) %}
+<header class="page-header">
+    <div class="container">
+        <h1>{{ admissions.header_title|default("Admissions Master G2C") }}</h1>
+        <p>{{ admissions.header_subtitle|default("Rejoignez une formation d'excellence en Gestion d'Actifs, Contrôle des Risques et Conformité") }}</p>
+    </div>
+</header>
+
+<!-- ========= PROCESSUS D'ADMISSION ========= -->
+<section class="section">
+    <h2 class="section-title">{{ admissions.process_title|default("Processus d'admission") }}</h2>
+    <div class="timeline-container">
+        <!-- Phase 1 -->
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h4>{{ admissions.phase1_title|default("Phase 1: Dépôt des candidatures") }}</h4>
+                <p>{{ admissions.phase1_period|default("Du 1er février au 31 mars") }}</p>
+                <ul class="semester-list">
+                    {% if admissions.phase1_details %}
+                        {% for item in admissions.phase1_details %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>Création du dossier en ligne</li>
+                        <li>Upload des documents requis</li>
+                        <li>Validation de la candidature</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <!-- Phase 2 -->
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h4>{{ admissions.phase2_title|default("Phase 2: Étude des dossiers") }}</h4>
+                <p>{{ admissions.phase2_period|default("Du 1er au 15 avril") }}</p>
+                <ul class="semester-list">
+                    {% if admissions.phase2_details %}
+                        {% for item in admissions.phase2_details %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>Analyse du parcours académique</li>
+                        <li>Évaluation des compétences</li>
+                        <li>Présélection des candidats</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <!-- Phase 3 -->
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h4>{{ admissions.phase3_title|default("Phase 3: Entretiens") }}</h4>
+                <p>{{ admissions.phase3_period|default("Du 15 avril au 15 mai") }}</p>
+                <ul class="semester-list">
+                    {% if admissions.phase3_details %}
+                        {% for item in admissions.phase3_details %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>Entretien de motivation</li>
+                        <li>Test d'anglais</li>
+                        <li>Étude de cas</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <!-- Phase 4 -->
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h4>{{ admissions.phase4_title|default("Phase 4: Résultats") }}</h4>
+                <p>{{ admissions.phase4_period|default("Fin mai") }}</p>
+                <ul class="semester-list">
+                    {% if admissions.phase4_details %}
+                        {% for item in admissions.phase4_details %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>Annonce des admissions</li>
+                        <li>Confirmation d'inscription</li>
+                        <li>Finalisation du dossier</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========= PRÉREQUIS ========= -->
+<section class="admission-requirements">
+    <h2 class="section-title">{{ admissions.requirements_title|default("Prérequis") }}</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-lg-3 requirement-card">
+                <h3 class="requirement-title">Prérequis académiques</h3>
+                <ul class="requirement-list">
+                    <li>Licence en économie, gestion, mathématiques ou équivalent</li>
+                    <li>Excellent dossier académique</li>
+                    <li>Maîtrise des outils quantitatifs</li>
+                </ul>
+            </div>
+            <div class="col-md-5 col-lg-3 requirement-card">
+                <h3 class="requirement-title">Compétences linguistiques</h3>
+                <ul class="requirement-list">
+                    <li>Niveau B2 en anglais recommandé</li>
+                    <li>TOEFL, IELTS ou équivalent apprécié</li>
+                    <li>Capacité à suivre des cours en anglais</li>
+                </ul>
+            </div>
+            <div class="col-md-5 col-lg-3 requirement-card">
+                <h3 class="requirement-title">Expérience professionnelle</h3>
+                <ul class="requirement-list">
+                    <li>Stages en entreprise appréciés</li>
+                    <li>Expérience en finance un plus</li>
+                    <li>Projets académiques pertinents</li>
+                </ul>
+            </div>
+            <div class="col-md-5 col-lg-3 requirement-card">
+                <h3 class="requirement-title">Documents requis</h3>
+                <ul class="requirement-list">
+                    <li>CV détaillé</li>
+                    <li>Lettre de motivation</li>
+                    <li>Relevés de notes</li>
+                    <li>Diplômes et certifications</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========= OUTILS D'ENTRAÎNEMENT ========= -->
+{% set training = admissions.get('training_section', {}) %}
+<section class="training-tools">
+    <div class="container">
+        <h2 class="section-title">
+            {{ training.title|default("Envie de s'entraîner avant l'entretien ?") }}
+        </h2>
+        <div class="highlights-container">
+            {% for card in training.cards %}
+            <div class="highlight-card">
+                <div class="highlight-icon">
+                    <span>{{ card.icon }}</span>
+                </div>
+                <h3 class="highlight-title">{{ card.title }}</h3>
+                <p class="highlight-description">{{ card.text }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="button-container">
+            <a href="/wip" target="_blank" class="button-standard">
+                {{ training.button_text|default("Découvrir l'outil") }}
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Juste avant </main>, par exemple -->
+<section class="cta-section">
+    <h2 class="cta-title">PRÊT À NOUS REJOINDRE ?</h2>
+    <p class="cta-subtext">Découvrez le processus d’admission et postulez dès maintenant</p>
+    <a href="/candidater" class="button-standard cta-button">Candidater</a>
+  </section>
+
+{% endblock %}

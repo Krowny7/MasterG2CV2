@@ -1,0 +1,139 @@
+/* 1) Limiter la largeur globale de la section "Les Métiers" */
+.career-jobs-container {
+    max-width: 1200px; /* Ajuste la largeur max selon ton rendu souhaité */
+    margin: 0 auto;    /* Centre le conteneur */
+  }
+  
+
+  
+#career-stats {
+    margin-top: 50px;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+}
+
+#career-stats-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+#career-stats-grid .stat-value {
+    font-size: 3rem;
+    color: #F0122D;
+}
+
+#career-alumni {
+    padding: 40px 20px;
+    background-color: #fff;
+}
+
+#career-alumni .highlight-card {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+  
+
+
+.map-content-container-unique {
+    display: flex;
+    justify-content: space-between; /* Espace entre les deux éléments */
+    gap: 15px; /* Espacement entre la carte et le contenu */
+    align-items: stretch; /* Étire les deux éléments à la même hauteur */
+}
+.map-content-container-unique {
+    display: flex;
+    justify-content: space-between; /* Espace entre les deux éléments */
+    gap: 15px; /* Espacement entre la carte et le contenu */
+    align-items: stretch; /* Étire les deux éléments à la même hauteur */
+    min-height: 500px; /* Hauteur minimale pour s'assurer que tout le contenu s'affiche */
+}
+/* Conteneur général */
+.map-content-container-unique {
+    display: flex;
+    justify-content: space-between; /* Espace entre les deux éléments */
+    gap: 15px; /* Espacement entre la carte et le contenu */
+    align-items: stretch; /* Étire les deux éléments pour avoir la même hauteur */
+    flex-wrap: wrap; /* Permet une disposition en colonne si nécessaire */
+    height: auto; /* S'ajuste automatiquement selon le contenu */
+}
+
+/* Styles des éléments principaux */
+.map-frame-unique,
+.content-frame-unique {
+    flex: 1; /* Les deux éléments prennent un espace égal */
+    max-width: 48%; /* Largeur maximale pour rester côte à côte sur grand écran */
+    min-width: 300px; /* Largeur minimale pour éviter les problèmes sur petits écrans */
+    border-radius: 10px; /* Arrondi des bords */
+    overflow: hidden; /* Empêche tout débordement de contenu */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Effet d'ombre pour un rendu esthétique */
+    background-color: #fff; /* Fond blanc pour une meilleure lisibilité */
+    display: flex; /* Utilisé pour centrer verticalement le contenu */
+    flex-direction: column;
+}
+
+.map-frame-unique iframe,
+.content-frame-unique iframe {
+    width: 100%; /* L'iframe occupe toute la largeur */
+    flex-grow: 1; /* Étend l'iframe pour qu'elle occupe toute la hauteur */
+    border: none; /* Suppression des bordures */
+    border-radius: 10px; /* Arrondi des bords pour l'iframe */
+}
+
+.content-frame-unique {
+    padding: 10px; /* Espacement interne pour éviter que le texte touche les bords */
+}
+
+/* Texte en dessous */
+.map-info-note {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .map-content-container-unique {
+        flex-direction: column; /* Passe à une disposition en colonne */
+        align-items: center; /* Centre les éléments en colonne */
+        gap: 20px; /* Espacement légèrement augmenté */
+    }
+
+    .map-frame-unique,
+    .content-frame-unique {
+        max-width: 120%; /* Augmente la largeur en version responsive */
+        height: 100%; /* Ajuste automatiquement la hauteur */
+    }
+
+    .map-frame-unique iframe,
+    .content-frame-unique iframe {
+        flex-grow: 1; /* Assure une hauteur égale entre les éléments */
+    }
+}
+
+
+
+
+.video-frame {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.video-frame iframe {
+    width: 100%;
+    max-width: 900px;
+    height: 515px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

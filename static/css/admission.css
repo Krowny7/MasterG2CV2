@@ -1,0 +1,55 @@
+/* Styles personnalisés pour la section "Prérequis" de la page Admissions */
+
+.admission-requirements {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.requirement-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.requirement-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.requirement-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1C1E22;
+    margin-bottom: 20px;
+}
+
+.requirement-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 500px;
+    text-align: center;
+}
+
+/* Responsive ajustements */
+@media screen and (max-width: 768px) {
+    .requirement-title {
+        font-size: 1.3rem;
+    }
+    .requirement-list li {
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .requirement-title {
+        font-size: 1.1rem;
+    }
+    .requirement-list li {
+        font-size: 0.85rem;
+    }
+}

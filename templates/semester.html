@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Semestre à l'étranger - Master G2C{% endblock %}
+
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/semester.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="semester-hero">
+  <div class="container">
+    <h1>{{ semester_section.title or "Semestre à l'étranger" }}</h1>
+    <p>{{ semester_section.text or "Découvrez toutes les opportunités pour étudier à l’international." }}</p>
+    {% if semester_section.button %}
+      <a href="#" class="btn btn-primary">{{ semester_section.button }}</a>
+    {% endif %}
+  </div>
+</section>
+
+<section class="semester-details">
+  <div class="container">
+    <h2>Pourquoi partir à l'étranger ?</h2>
+    <p>
+      Le semestre à l'étranger vous offre l'opportunité de découvrir une nouvelle culture, 
+      de perfectionner vos compétences linguistiques et d'acquérir une expérience pratique 
+      dans un environnement international.
+    </p>
+    <h3>Les avantages</h3>
+    <ul>
+      <li>Acquisition de compétences interculturelles</li>
+      <li>Amélioration de votre niveau en langues étrangères</li>
+      <li>Opportunités de networking international</li>
+      <li>Expérience pratique et stages à l'étranger</li>
+    </ul>
+    <h3>Modalités d'inscription</h3>
+    <p>
+      Les candidatures pour le semestre à l'étranger se font généralement après la première année. 
+      La sélection se base sur vos résultats académiques, votre motivation et votre maîtrise des langues étrangères.
+    </p>
+  </div>
+</section>
+{% endblock %}

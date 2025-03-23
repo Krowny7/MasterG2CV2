@@ -1,0 +1,184 @@
+/* ==========================================================================
+   TABLE DES MATIÈRES - admin.css
+   ==========================================================================
+   I. STYLE GÉNÉRAL
+   II. CONTENEURS PRINCIPAUX
+   III. TITRES PRINCIPAUX
+   IV. FORMULAIRES & FIELDSETS
+   V. BOUTONS
+   VI. MESSAGES FLASH
+   VII. EXEMPLES JSON
+   VIII. TABS
+   ==========================================================================
+*/
+
+/* I. STYLE GÉNÉRAL */
+.admin-page, .login-page {
+  background-color: #f9f9f9;
+  min-height: calc(100vh - 60px); /* 60px = hauteur de la navbar */
+  padding: 60px 20px;
+}
+
+/* II. CONTENEURS PRINCIPAUX */
+.admin-container, .login-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+/* III. TITRES PRINCIPAUX */
+.admin-container h2,
+.login-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+/* IV. FORMULAIRES & FIELDSETS */
+.admin-container fieldset {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+.admin-container fieldset legend {
+  font-weight: 600;
+  color: #333;
+}
+
+.admin-container label,
+.login-container label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.admin-container input[type="text"],
+.admin-container input[type="password"],
+.admin-container textarea,
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+/* V. BOUTONS */
+.admin-container button,
+.admin-container input[type="submit"],
+.login-container button,
+.login-container input[type="submit"] {
+  background: #F0122D;
+  color: #fff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.admin-container button:hover,
+.admin-container input[type="submit"]:hover,
+.login-container button:hover,
+.login-container input[type="submit"]:hover {
+  background-color: #d6051e;
+}
+
+/* VI. MESSAGES FLASH */
+.flash {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.flash.success {
+  background-color: #c8e6c9;
+}
+.flash.danger {
+  background-color: #ffcdd2;
+}
+
+/* VII. EXEMPLES JSON */
+.json-example {
+  margin-top: 10px;
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 8px;
+}
+.json-example textarea {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: monospace;
+}
+
+/* VIII. TABS */
+/* Barre d’onglets */
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap; /* Permet de revenir à la ligne */
+  gap: 10px;       /* Espace entre les boutons */
+  margin-bottom: 20px;
+}
+
+.admin-tabs .tab-link {
+  background: #F0122D;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 15px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.admin-tabs .tab-link:hover {
+  background-color: #d6051e;
+}
+
+/* Par défaut, on masque tout. On n’affiche que quand on cible un hash. */
+.tab-content {
+  display: none;
+}
+
+#tab-accueil:target,
+#tab-programme:target,
+#tab-pourquoi:target,
+#tab-semester:target,
+#tab-admissions:target,
+#tab-carriere:target,
+#tab-contact:target,
+#tab-projets:target {
+  display: block;
+}
+
+
+
+
+
+.json-example textarea {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+
+.tab-link-projets {
+  background-color: #4CAF50; /* Un vert */
+  color: #fff;
+}
+.tab-link-projets:hover {
+  background-color: #45A049;
+}
+
+/* Assurez-vous d'ajouter la règle pour afficher le contenu
+   quand on clique sur l’onglet Projets */
+#tab-projets:target {
+  display: block;
+}

@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if action == 'new' %}
+    Nouveau projet
+  {% else %}
+    Modifier le projet
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>
+    {% if action == 'new' %}
+      Nouveau projet
+    {% else %}
+      Modifier le projet
+    {% endif %}
+  </h1>
+
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <!-- Champs de base -->
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.year.label }}<br>
+      {{ form.year(size=10) }}
+      {% for error in form.year.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.title.label }}<br>
+      {{ form.title(size=60) }}
+      {% for error in form.title.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.description.label }}<br>
+      {{ form.description(rows=4, cols=60) }}
+      {% for error in form.description.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.link.label }}<br>
+      {{ form.link(size=60) }}
+      {% for error in form.link.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+
+    <!-- Affichage des images existantes pour le projet -->
+    {% if project and project.images %}
+      <div class="existing-images" style="margin-bottom: 15px;">
+        <p>Images actuelles du projet :</p>
+        {% for img in project.images %}
+          <img src="{{ url_for('static', filename='media/' ~ img) }}"
+               alt="Image existante"
+               style="max-width: 120px; margin-right: 10px; border: 1px solid #ccc;">
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Champs pour uploader de nouvelles images -->
+    <h4>Images du projet (jusqu'à 5)</h4>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.image1.label }}<br>
+      {{ form.image1() }}
+      {% for error in form.image1.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.image2.label }}<br>
+      {{ form.image2() }}
+      {% for error in form.image2.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.image3.label }}<br>
+      {{ form.image3() }}
+      {% for error in form.image3.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.image4.label }}<br>
+      {{ form.image4() }}
+      {% for error in form.image4.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.image5.label }}<br>
+      {{ form.image5() }}
+      {% for error in form.image5.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+
+    <!-- Informations sur les étudiants -->
+    <h4>Informations sur les étudiants (max 3)</h4>
+
+    <!-- Étudiant 1 -->
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student1_name.label }}<br>
+      {{ form.student1_name(size=40) }}
+    </div>
+    {% if project and project.students and project.students|length >= 1 and project.students[0].photo %}
+      <div class="existing-student-photo" style="margin-bottom: 15px;">
+        <p>Photo actuelle de l'étudiant 1 :</p>
+        <img src="{{ url_for('static', filename='media/' ~ project.students[0].photo) }}"
+             alt="{{ project.students[0].name }}"
+             style="max-width: 80px; border-radius: 50%; margin-bottom: 10px;">
+      </div>
+    {% endif %}
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student1_photo.label }}<br>
+      {{ form.student1_photo() }}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student1_linkedin.label }}<br>
+      {{ form.student1_linkedin(size=60) }}
+    </div>
+
+    <!-- Étudiant 2 -->
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student2_name.label }}<br>
+      {{ form.student2_name(size=40) }}
+    </div>
+    {% if project and project.students and project.students|length >= 2 and project.students[1].photo %}
+      <div class="existing-student-photo" style="margin-bottom: 15px;">
+        <p>Photo actuelle de l'étudiant 2 :</p>
+        <img src="{{ url_for('static', filename='media/' ~ project.students[1].photo) }}"
+             alt="{{ project.students[1].name }}"
+             style="max-width: 80px; border-radius: 50%; margin-bottom: 10px;">
+      </div>
+    {% endif %}
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student2_photo.label }}<br>
+      {{ form.student2_photo() }}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student2_linkedin.label }}<br>
+      {{ form.student2_linkedin(size=60) }}
+    </div>
+
+    <!-- Étudiant 3 -->
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student3_name.label }}<br>
+      {{ form.student3_name(size=40) }}
+    </div>
+    {% if project and project.students and project.students|length >= 3 and project.students[2].photo %}
+      <div class="existing-student-photo" style="margin-bottom: 15px;">
+        <p>Photo actuelle de l'étudiant 3 :</p>
+        <img src="{{ url_for('static', filename='media/' ~ project.students[2].photo) }}"
+             alt="{{ project.students[2].name }}"
+             style="max-width: 80px; border-radius: 50%; margin-bottom: 10px;">
+      </div>
+    {% endif %}
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student3_photo.label }}<br>
+      {{ form.student3_photo() }}
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      {{ form.student3_linkedin.label }}<br>
+      {{ form.student3_linkedin(size=60) }}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+    <a href="{{ url_for('admin_projects') }}" class="btn btn-secondary">Annuler</a>
+  </form>
+</div>
+{% endblock %}

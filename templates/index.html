@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block title %}Accueil - Mon Site{% endblock %}
+
+{% block head_extras %}
+  <!-- Feuille de style spécifique au slider (et à la page d’accueil) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/slider.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+  <!-- SECTION SLIDER & NEWS -->
+  <section class="slider-section">
+    <div class="slider-wrapper">
+      <div class="slider-content">
+        <!-- Conteneur des slides (images, vidéos...) -->
+        <div class="slides" id="slides-container"></div>
+        <!-- Navigation du slider -->
+        <nav class="navigation" id="navigation-dots">
+          <button class="nav-btn" id="nav-prev" aria-label="Précédent"></button>
+          <button class="nav-btn nav-progress" id="nav-current" aria-label="Progression">
+            <svg class="progress-ring" width="32" height="32">
+              <circle class="progress-ring__circle"
+                      stroke="#ff6f61"
+                      stroke-width="3"
+                      fill="transparent"
+                      r="12"
+                      cx="16"
+                      cy="16" />
+            </svg>
+          </button>
+          <button class="nav-btn" id="nav-next" aria-label="Suivant"></button>
+        </nav>
+      </div>
+
+      <!-- Barre de news -->
+      <div class="news-bar">
+        <div class="news-badge">
+          <div class="badge-live">LIVE</div>
+          <div class="badge-news">NEWS</div>
+        </div>
+        <div class="news-lines">
+          {% if homepage_content.news_section and homepage_content.news_section.lines %}
+            <!-- On crée une seule "news-line" qui contient toutes les news -->
+            <div class="news-line speed1">
+              {% for item in homepage_content.news_section.lines %}
+                <strong class="news-title">{{ item.title }}</strong> {{ item.text }}
+                {% if not loop.last %}
+                  <!-- Séparateur entre les news -->
+                  &nbsp;•&nbsp;
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="news-line speed1">
+              <strong class="news-title">News par défaut</strong> Pas de news pour le moment...
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION INFO -->
+  <section class="info-section">
+    <div class="info-wrapper">
+      <div class="info-image">
+        <img src="{{ url_for('static', filename='media/grade.png') }}" alt="Grade">
+      </div>
+      <div class="info-container">
+        <article class="info-box">
+          <h3>ECTS</h3>
+          <p>{{ homepage_content.info_section.ects or "120 crédits" }}</p>
+        </article>
+        <article class="info-box">
+          <h3>Durée</h3>
+          <p>{{ homepage_content.info_section.duration or "2 ans" }}</p>
+        </article>
+        <article class="info-box">
+          <h3>Institution</h3>
+          <p>{{ homepage_content.info_section.institution or "IAE Caen" }}</p>
+        </article>
+        <article class="info-box">
+          <h3>Diplôme</h3>
+          <p>{{ homepage_content.info_section.diploma or "Grade Master - Bac+5" }}</p>
+        </article>
+        <article class="info-box">
+          <h3>Capacité d'accueil</h3>
+          <p>{{ homepage_content.info_section.capacity or "20" }}</p>
+        </article>
+        <article class="info-box">
+          <h3>Régime d'étude</h3>
+          <p>{{ homepage_content.info_section.study_mode or "Formation initiale et Formation Continue" }}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div class="content-container">
+      <h2 class="section-title">Présentation du Master</h2>
+      <p class="section-description">
+        {{ homepage_content.presentation|replace('\n','<br>')|safe }}
+      </p>      
+    </div>
+  </section>
+  
+
+  <!-- SECTION ENTREPRISES -->
+  <section class="trusted-companies-section">
+    <div class="trusted-container">
+      <h2 class="section-title">
+        {{ homepage_content.trusted_companies_section.title or "Ils nous font confiance" }}
+      </h2>
+      <p class="section-description">
+        {{ homepage_content.trusted_companies_section.description or "Découvrez les entreprises partenaires." }}
+      </p>
+      <div class="logos-marquee">
+        <div class="logos-track" id="logosTrack">
+          {% if homepage_content.trusted_companies_section and homepage_content.trusted_companies_section.logos %}
+            {% for logo in homepage_content.trusted_companies_section.logos %}
+              <div class="logo-item">
+                <img src="{{ url_for('static', filename='media/' ~ logo.filename) }}" alt="{{ logo.alt }}">
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>Aucun logo défini pour le moment.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION LOCALISATION -->
+  <section class="map-section">
+    <div class="map-container">
+      <h2>{{ homepage_content.map_section.title or "Nous Trouver" }}</h2>
+      <p>{{ homepage_content.map_section.address or "19 Rue Claude Bloch, 14000 Caen, France" }}</p>
+      <div class="map-frame">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.261600781773!2d-0.36656218435093624!3d49.194648779323524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480a4269c1bfb003%3A0x880f22116719180c!2s19%20Rue%20Claude%20Bloch%2C%2014000%20Caen%2C%20France!5e0!3m2!1sen!2sfr!4v1696093027293!5m2!1sen!2sfr"
+                width="100%"
+                height="400"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION TÉMOIGNAGES -->
+  <section class="testimonials">
+    <div class="testimonials-container">
+      <h2 class="testimonials-title">
+        {{ homepage_content.testimonials_section.title or "Témoignages" }}
+      </h2>
+      <div class="testimonials-grid">
+        {% if homepage_content.testimonials_section["items"] %}
+          {% for t in homepage_content.testimonials_section["items"] %}
+            <article class="testimonial-card">
+              <p class="testimonial-text">{{ t.text }}</p>
+              <footer class="testimonial-author">{{ t.author }}</footer>
+            </article>
+          {% endfor %}
+        {% else %}
+          <p>Aucun témoignage pour le moment.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+
+<!-- Juste avant </main>, par exemple -->
+<section class="cta-section">
+  <h2 class="cta-title">PRÊT À NOUS REJOINDRE ?</h2>
+  <p class="cta-subtext">Découvrez le processus d’admission et postulez dès maintenant</p>
+  <a href="/admissions" class="button-standard cta-button">Candidater</a>
+</section>
+
+
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="{{ url_for('static', filename='js/slider.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/globe.js') }}"></script>
+</main>
+{% endblock %}

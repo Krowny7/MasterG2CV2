@@ -1,0 +1,127 @@
+/* Section principale */
+#contact-section {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* Conteneur des cartes */
+#contact-container {
+    display: flex; /* Aligne les cartes sur une ligne */
+    justify-content: center; /* Centre les cartes horizontalement */
+    align-items: stretch; /* Étire les cartes pour qu'elles aient la même hauteur */
+    gap: 20px; /* Espacement entre les cartes */
+    flex-wrap: wrap; /* Permet le retour à la ligne sur écrans étroits */
+    padding: 20px;
+}
+
+/* Cartes */
+.contact-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 500px; /* Limite maximale de largeur */
+    min-width: 300px; /* Limite minimale de largeur */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    box-sizing: border-box; /* Inclut les bordures et padding dans la largeur totale */
+    height: auto; /* Permet à Flexbox d’ajuster automatiquement la hauteur */
+}
+
+/* Force les cartes à avoir la même hauteur */
+.contact-card {
+    height: 600px; /* Définit une hauteur fixe pour uniformiser l'affichage */
+}
+
+/* Effet au survol des cartes */
+.contact-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Titre de la section */
+.section-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #8B0000;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* Champs du formulaire de contact */
+#contactForm input,
+#contactForm select,
+#contactForm textarea {
+    width: 100%; /* Empêche les champs de dépasser la largeur de la carte */
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Inclut les bordures et padding dans la largeur totale */
+    margin-bottom: 10px; /* Espacement entre les champs */
+}
+
+/* Focus sur les champs du formulaire */
+#contactForm input:focus,
+#contactForm select:focus,
+#contactForm textarea:focus {
+    outline: none;
+    border-color: #8B0000;
+    box-shadow: 0 0 5px rgba(139, 0, 0, 0.4);
+}
+
+/* Liste des informations de contact */
+#info-list {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 5; /* Espacement entre les lignes */
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Points avant chaque ligne d'information */
+#info-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px; /* Espacement réduit entre les lignes */
+}
+
+#info-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #8B0000;
+    font-size: 1.2rem;
+}
+
+/* Responsive : écrans étroits */
+@media (max-width: 768px) {
+    #contact-container {
+        flex-direction: column; /* Aligne les cartes en colonne */
+    }
+
+    .contact-card {
+        max-width: 100%; /* Les cartes occupent toute la largeur */
+        margin-bottom: 20px;
+    }
+
+    #info-list {
+        line-height: 2.5; /* Espacement entre les lignes */
+    }
+}
+
+
+#contact-info-card .button-standard {
+    display: inline-block;
+    width: auto;
+    margin: 0 auto;
+}

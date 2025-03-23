@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}Projets Universitaires - Master G2C{% endblock %}
+
+{% block head_extras %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/projets.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- SECTION 1 : Introduction -->
+<section class="projects-intro">
+  <div class="container">
+    <h1>Les Projets du Master G2C</h1>
+    <p>
+      Chaque année, nos étudiants réalisent des projets innovants mêlant finance, VBA, Python, Data, etc.
+      Découvrez ici leurs réalisations, classées par année.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 2 : Projets par année -->
+{% set project_data = homepage_content.get("why_section", {}).get("project_section", {}) %}
+{% set details = project_data.get("details", []) %}
+
+<section class="projects-yearly">
+  <div class="container">
+    {% set years = [] %}
+    {% for p in details %}
+      {% if p.year not in years %}
+        {% set _ = years.append(p.year) %}
+      {% endif %}
+    {% endfor %}
+    {% set years = years|sort(reverse=true) %}
+
+    <div class="year-nav">
+      {% for y in years %}
+        <button class="year-btn" onclick="showYear('{{ y }}')">
+          {{ y }}
+        </button>
+      {% endfor %}
+    </div>
+
+    {% for y in years %}
+      <div class="year-container" id="year-{{ y }}">
+        <h2>Projets de l'année {{ y }}</h2>
+        {% for project in details if project.year == y %}
+          <div class="project-item">
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.description }}</p>
+            {% if project.link %}
+              <a href="{{ project.link }}" target="_blank" class="button-standard">
+                Voir le projet
+              </a>
+            {% endif %}
+
+            <!-- Affichage des images multiples -->
+            {% if project.images %}
+              <div class="project-images">
+                {% for img in project.images %}
+                  <img 
+                    src="{{ url_for('static', filename='media/' ~ img) }}"
+                    alt="Photo du projet"
+                    class="project-image-thumb"
+                    onclick='openImageModal("{{ url_for("static", filename="media/" ~ img) }}")'
+                  >
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <!-- Affichage des étudiants -->
+            {% if project.students %}
+              <div class="project-students">
+                <h4>Étudiant(s) :</h4>
+                <ul>
+                  {% for st in project.students %}
+                    <li class="student-card">
+                      {% if st.photo %}
+                        {% if st.linkedin %}
+                          <!-- Lien LinkedIn si défini -->
+                          <a href="{{ st.linkedin }}" target="_blank">
+                            <img 
+                              src="{{ url_for('static', filename='media/' ~ st.photo) }}"
+                              alt="{{ st.name }}"
+                            >
+                          </a>
+                        {% else %}
+                          <!-- Pas de LinkedIn, juste la photo -->
+                          <img 
+                            src="{{ url_for('static', filename='media/' ~ st.photo) }}"
+                            alt="{{ st.name }}"
+                          >
+                        {% endif %}
+                      {% endif %}
+                      <span>{{ st.name }}</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          </div>
+          <hr>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Fenêtre modale -->
+<div id="imageModal" class="modal">
+  <span class="close" onclick="closeImageModal()">&times;</span>
+  <img class="modal-content" id="modal-img">
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let yearNav = document.querySelectorAll('.year-btn');
+    if (yearNav.length > 0) {
+      showYear(yearNav[0].innerText);
+    }
+  });
+
+  function showYear(year) {
+    const allContainers = document.querySelectorAll('.year-container');
+    allContainers.forEach(el => el.style.display = 'none');
+    const target = document.getElementById('year-' + year);
+    if (target) {
+      target.style.display = 'block';
+    }
+  }
+
+  function openImageModal(src) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modal-img');
+    modal.style.display = 'block';
+    modalImg.src = src;
+  }
+
+  function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+  }
+</script>
+{% endblock %}

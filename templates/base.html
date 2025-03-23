@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Mon Site{% endblock %}</title>
+  <!-- Feuilles de style communes -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/slider.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pourquoi.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/programme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admission.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/projets.css') }}">
+  {% block head_extras %}{% endblock %}
+</head>
+<body>
+  <!-- NAVBAR DANS LE FLUX, LOGO À GAUCHE ET LIENS AU CENTRE -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="{{ url_for('index') }}" class="navbar-logo">
+        <img src="{{ url_for('static', filename='media/logo.png') }}" alt="Master G2C Logo">
+        <span>Master G2C</span>
+      </a>
+    </div>
+    <div class="navbar-center">
+      <ul class="nav-links">
+        <li><a href="/programme">Programme</a></li>
+        <li><a href="/pourquoiG2C">Pourquoi G2C</a></li>
+        <li><a href="/admissions">Admissions</a></li>
+        <li><a href="/carriere">Carrières</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CONTENU PRINCIPAL -->
+  {% block content %}{% endblock %}
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="{{ url_for('static', filename='media/logo.png') }}" alt="Master G2C Logo">
+      </div>
+      <p class="footer-description">
+        Le Master G2C forme les leaders de demain en gestion d'actifs, conformité et gestion des risques.
+      </p>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/master-g2c-gestion-d-actifs-contr%C3%B4le-des-risques-et-conformit%C3%A9/posts/?feedView=all" target="_blank">
+          <img src="{{ url_for('static', filename='media/linkedin.png') }}" alt="LinkedIn">
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Master G2C. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts externes -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+  <script src="{{ url_for('static', filename='js/robot3d.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='js/robot.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='js/globe.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='js/customGlobe.js') }}"></script>
+</body>
+</html>

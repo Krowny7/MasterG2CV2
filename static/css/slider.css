@@ -1,0 +1,911 @@
+/* ==========================================================================
+   I. SLIDER ET NAVIGATION
+   ========================================================================== */
+
+/* 1. Conteneur Global (Slides + Barre de News) */
+/* Hauteur = tout l'écran moins la navbar (60px) */
+.slider-wrapper {
+    height: calc(100vh - 60px); /* Ajuster si la navbar fait 60px */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sous-conteneur pour les slides et la navigation */
+.slider-content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 2. Slides */
+.slides {
+    display: flex;
+    transition: transform 0.7s ease-in-out;
+    height: 100%; /* S'étend sur toute la hauteur du conteneur slider-content */
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: #000; /* Couleur de fond par défaut */
+}
+
+.slide-content {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Remplit le conteneur sans déformer */
+    object-position: center; /* Centre le focus */
+    display: block;
+}
+
+/* 3. Légendes (Avec ou sans fond) */
+/* Légende avec fond noir */
+.slide-inner-html {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 2;
+    color: #fff;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+}
+
+.slide-inner-html.centered {
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* Légende sans fond */
+.slide-inner-html-nobg {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 2;
+    color: #fff;
+    padding: 1rem;
+}
+
+.slide-inner-html-nobg.centered {
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* Surcharge pour vidéo offset (remonte un peu le texte) */
+.slide-inner-html-nobg.centered.video-offset {
+    top: 35%; /* Ajustez la valeur selon vos besoins */
+    transform: translate(-50%, -40%);
+}
+
+/* 4. Navigation (Boutons & Progression) */
+/* Conteneur de navigation */
+.navigation {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.nav-btn {
+    margin: 0;
+    padding: 0;
+}
+
+/* Bouton central (cercle de progression, 32×32) */
+.nav-progress {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: transparent; /* ou background: none; */
+    appearance: none;             /* enlève l'apparence par défaut */
+    -webkit-appearance: none;     /* compatibilité Safari/Chrome */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+}
+
+.nav-progress:hover {
+    background-color: transparent !important;
+    transform: none !important;
+}
+
+/* Boutons précédent / suivant : ronds pleins gris (même couleur que la barre de news) */
+#nav-prev,
+#nav-next {
+    width: 16px;
+    height: 16px;
+    background-color: #2b2b2b7a; /* gris sombre comme la barre de news */
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#nav-prev:hover,
+#nav-next:hover {
+    background-color: #2b2b2b; /* Variante au survol */
+    transform: scale(1.05);
+}
+
+/* Rotation du SVG pour que la progression commence en haut */
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+/* Cercle de progression (exemple pour r=12, circonférence ~75.4) */
+.progress-ring__circle {
+    stroke-dasharray: 75.4;
+    stroke-dashoffset: 75.4; /* Cercle "vide" au départ */
+    transition: none; /* Transition gérée dans le JS */
+}
+
+/* 5. Barre de News */
+.news-bar {
+    height: 70px; /* Ajustez selon la place souhaitée */
+    background: linear-gradient(90deg, #2b2b2b, #111);
+    color: #fff;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Badge rouge dégradé à gauche */
+.news-badge {
+    width: 160px; /* Ajustez la largeur souhaitée */
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    animation: gradientSlide 10s infinite linear;
+    position: relative;
+}
+
+/* Bloc jaune pour le texte LIVE */
+.badge-live {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #FFCC00;
+    color: #000;
+    padding: 8px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* Texte NEWS en blanc sur fond rouge */
+.badge-news {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.news-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    overflow: hidden;
+}
+
+.news-line {
+    white-space: nowrap;
+    padding: 0 10px;
+    font-size: 22px;
+    animation: scroll-left 15s linear infinite;
+}
+
+.news-title {
+    color: #e80000;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.speed1 { animation-duration: 15s; }
+.speed2 { animation-duration: 20s; }
+.speed3 { animation-duration: 25s; }
+
+@keyframes scroll-left {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* 6. Slides spécifiques & Effets divers */
+.first-slide-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+    animation: fadeInSubtitle 1.5s ease-out forwards;
+    min-height: 300px;
+}
+
+/* Réduction de la marge sous un élément (ex. IAE CAEN) */
+.reduce-gap {
+    margin-bottom: -2rem !important;
+}
+
+/* Texte avec contour (effet outline) */
+.text-outline {
+    text-shadow:
+        -0.5px -0.5px 0 #000,
+         0.5px -0.5px 0 #000,
+        -0.5px  0.5px 0 #000,
+         0.5px  0.5px 0 #000;
+}
+
+/* Slide "Caen" : overlay plein écran + gradient */
+.caen-slide-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Dégradé du haut (un peu transparent) vers le bas (plus sombre) */
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.162) 0%,
+      rgba(0, 0, 0, 0.782) 100%
+    );
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+}
+
+/* Sous-titre blanc, épais, contour noir */
+.caen-intro-text {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    text-shadow:
+      -1px -1px 0 #000,
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000;
+}
+
+/* 1) Conteneur flex sans fond noir global */
+.caen-stats-wrapper {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* On retire le fond noir global, donc pas de background, padding, etc. */
+}
+
+/* 2) Chaque bloc a son propre fond noir semi-transparent */
+.caen-stat-block {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    min-width: 100px;
+    text-align: center;
+    color: #fff;
+
+    /* Petite ombre et transition */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effet au survol */
+.caen-stat-block:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Titre de la stat */
+.caen-stat-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+/* Sous-titre de la stat */
+.caen-stat-subtitle {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* 3) Abaisser le bouton (forcé avec !important) */
+.caen-slide-content .caen-lower-button {
+    margin-top: 2rem !important;  /* Ajustez à votre goût */
+}
+
+/* Slide projets */
+.projects-slide-content {
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    display: block;
+    min-height: 450px;
+    color: #000;
+}
+
+/* Logos technos */
+.tech-logos {
+    margin-top: 2rem;
+    display: flex;
+    gap: 20px;
+}
+
+.tech-logos img {
+    height: 50px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    border: 5px solid #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tech-logos img:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Conteneur pour le cube (exemple 3D) */
+#cube-container {
+    width: 500px;
+    height: 500px;
+    background: none !important;
+}
+
+/* Pour ajouter un très léger contour noir au texte H3 */
+.slide-inner-html-nobg.centered.video-offset h3 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    color: #fff;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-shadow:
+        -0.5px -0.5px 0 #000,
+         0.5px -0.5px 0 #000,
+        -0.5px  0.5px 0 #000,
+         0.5px  0.5px 0 #000;
+}
+
+/* 7. 3D & Autres Conteneurs (Starfield, Flags, etc.) */
+.slide-3d-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Starfield en arrière-plan */
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* En arrière-plan */
+    background: black;
+    overflow: hidden;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1.0; }
+}
+
+.star {
+    animation: twinkle infinite ease-in-out;
+}
+
+/* Globe en haut à gauche dans une slide */
+.slide-globe-top-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.flag-row img {
+    width: 40px;
+    height: auto;
+    border-radius: 6px;
+    margin-right: 4px;
+    margin-top: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flag-row img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.slide-inner-html-nobg.slide-globe-top-left .red-title {
+    margin-top: -10px;
+    font-size: 4rem;
+}
+
+.slide-inner-html-nobg.slide-globe-top-left.video-offset p {
+    font-size: 1.25em;
+    line-height: 1.4;
+}
+
+.slide-inner-html-nobg.slide-globe-top-left.video-offset .button-standard {
+    margin-top: 1.5rem;
+}
+
+/* ==========================================================================
+   II. PARTENAIRES ET LOGOS
+   ========================================================================== */
+
+.red-title {
+    color: #f44336;
+}
+
+.white-bar {
+    width: 120px;
+    height: 4px;
+    background-color: #fff;
+    margin: 0.5rem auto 1rem auto;
+}
+
+.partners-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 3rem 0;
+}
+
+.partner-logo {
+    width: auto;
+    height: 55px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.partner-logo:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.2);
+}
+
+.partner-logo:active {
+    transform: translateY(-3px) scale(1.05);
+    filter: brightness(1.1);
+}
+
+.logo-eduniversal {
+    display: inline-block;
+    background: none;
+    padding: 0;
+    margin-left: 8px;
+    border: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+}
+
+.logo-eduniversal img {
+    height: 30px;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+.logo-eduniversal:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.cta-section {
+    /* Pas de fond blanc ni de bordure */
+    background: #f8f9fa; 
+    padding: 40px 20px;
+  
+    /* Centre le texte (titre, paragraphe, bouton) */
+    text-align: center; 
+  }
+  
+  /* Titre en dégradé, aligné au centre */
+  .cta-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientSlide 10s infinite linear;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* Paragraphe explicatif */
+  .cta-subtext {
+    font-size: 1.125rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Bouton, déjà stylé par .button-standard,
+     on peut juste l’agrandir ou le centrer si besoin */
+  .cta-button {
+    display: inline-block; /* Pour que text-align: center fonctionne */
+    font-size: 1.125rem;
+    padding: 0.8rem 2rem;
+    /* margin: 0 auto; <-- pas nécessaire si le parent est en text-align: center */
+  }
+  
+
+/* ==========================================================================
+   III. SECTIONS COMPLÉMENTAIRES
+   ========================================================================== */
+
+/* 1. Info Section (Image + Boîtes d'informations) */
+.info-section {
+    background-color: #f8f9fa;
+    padding: 40px 20px;
+}
+
+.info-wrapper {
+    display: flex;
+    align-items: stretch;
+    width: 90%;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+    gap: 20px;
+}
+
+.info-image {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-image img {
+    width: 120px;
+    height: auto;
+    display: block;
+}
+
+.info-container {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+}
+
+.info-box {
+    flex: 1 1 0;
+    min-width: 150px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.info-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.info-box h3 {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientSlide 10s infinite linear;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.info-box p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+/* 2. Section Générale (Text Section, Boutons, etc.) */
+.section-info {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: left;
+}
+
+.section-title {
+    font-size: 35px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    letter-spacing: 1.5px;
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInTitle 1s ease-out forwards, gradientSlide 10s infinite linear;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.content-container p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #1c1e22;
+    margin-bottom: 20px;
+}
+
+.content-container .text-highlight {
+    color: #F0122D;
+    font-weight: bold;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-standard {
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, background-color 0.3s ease, opacity 0.3s ease;
+    z-index: 100;
+    animation: gradientSlide 10s infinite linear, fadeInSubtitle 1.5s ease-out forwards !important;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.button-standard:hover {
+    background-color: #d6051e !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+.button-standard:active {
+    transform: scale(0.95) !important;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 3. Trusted Companies (Marquee) */
+.trusted-companies-section {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+}
+
+.trusted-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+}
+
+.section-title {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.section-description {
+    font-size: 1.125rem;     /* ~18px, un peu plus grand */
+    line-height: 1.8;        /* Plus d’espace entre les lignes */
+    color: #333;             /* Gris légèrement plus sombre que #1c1e22 */
+    margin-bottom: 1.5rem;   /* Espace en bas du paragraphe */
+    text-align: justify;     /* Justifie le texte sur les deux marges */
+  }
+  
+
+/* Conteneur qui masque le défilement */
+.logos-marquee {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* La piste de logos, à dupliquer via JS */
+.logos-track {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    white-space: nowrap;
+    animation: scrollLogos 25s linear infinite;
+}
+
+@keyframes scrollLogos {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.logo-item {
+    flex: 0 0 auto;
+}
+
+.logo-item img {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logo-item img:hover {
+    transform: scale(1.1);
+}
+
+/* 4. Map Section */
+.map-section {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+}
+
+.map-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.map-container h2 {
+    font-size: 35px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    letter-spacing: 1.5px;
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInTitle 1s ease-out forwards, gradientSlide 10s infinite linear;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.map-container p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #1c1e22;
+    margin-bottom: 20px;
+}
+
+.map-frame iframe {
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 5. Testimonials */
+.testimonials {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+    margin-top: 0;
+}
+
+.testimonials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.testimonials-title {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientSlide 10s infinite linear;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.testimonial-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial-text {
+    font-size: 1.125rem;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.testimonial-author {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #777;
+}
+
+.testimonial-card::before {
+    content: "“";
+    font-size: 5rem;
+    color: #f0122d;
+    position: absolute;
+    top: -15px;
+    left: 15px;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   IV. CONTAINERS GÉNÉRIQUES
+   ========================================================================== */
+
+.container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+}

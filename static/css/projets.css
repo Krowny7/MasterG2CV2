@@ -1,0 +1,234 @@
+/* ======================================================================
+   1. SECTION INTRO
+   ====================================================================== */
+   .projects-intro {
+    background: #f8f9fa;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  .projects-intro .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .projects-intro h1 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+  }
+  .projects-intro p {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  /* ======================================================================
+     2. SECTION YEARLY (Projets par année)
+     ====================================================================== */
+  .projects-yearly {
+    padding: 40px 20px;
+    background: #fff;
+  }
+  .projects-yearly .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Barre de navigation pour les années */
+  .year-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .year-btn {
+    background-color: #F0122D;
+    color: #fff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+  .year-btn:hover {
+    background-color: #d6051e;
+    transform: translateY(-2px);
+  }
+  
+  /* Conteneur d'une année */
+  .year-container {
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+    margin-bottom: 40px;
+  }
+  .year-container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+    background: linear-gradient(90deg, #F0122D, #54060f, #F0122D);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientSlide 10s infinite linear;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes gradientSlide {
+    0% { background-position: 0%; }
+    100% { background-position: 200%; }
+  }
+  
+  /* ======================================================================
+     3. PROJECT ITEM (carte)
+     ====================================================================== */
+  .project-item {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 40px auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-width: 900px;
+  }
+  .project-item h3 {
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .project-item p {
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  /* Bouton-lien (ex : "Voir le projet") */
+  .project-item a.button-standard {
+    margin-top: 10px;
+    display: inline-block;
+  }
+  
+  /* Séparateur interne */
+  .project-item hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #eee;
+  }
+  
+  /* ======================================================================
+     4. IMAGES DU PROJET
+     ====================================================================== */
+  .project-images {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+  }
+  .project-image-thumb {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    border: 2px solid #fff;
+  }
+  .project-image-thumb:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  
+  /* ======================================================================
+     5. ÉTUDIANTS
+     ====================================================================== */
+  .project-students {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 8px;
+  }
+  .project-students h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+  }
+  .project-students ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .student-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    width: 120px;
+  }
+  .student-card:hover {
+    transform: scale(1.03);
+  }
+  .student-card img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .student-card span {
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  /* ======================================================================
+     6. FENÊTRE MODALE
+     ====================================================================== */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .modal-content {
+    display: block;
+    margin: 50px auto;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+  }
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: #fff;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+  }
+  .close:hover {
+    color: #ccc;
+  }
+  

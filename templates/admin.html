@@ -1,0 +1,877 @@
+{% extends 'base.html' %}
+{% block title %}Administration - Modifier le contenu{% endblock %}
+
+{% block head_extras %}
+  <!-- Feuille de style pour l’administration -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="admin-page">
+  <div class="admin-container">
+    <h2>Administration</h2>
+
+    <!-- Navigation par onglets -->
+    <nav class="admin-tabs">
+      <a href="#tab-accueil" class="tab-link">Page d’accueil</a>
+      <a href="#tab-programme" class="tab-link">Programme</a>
+      <a href="#tab-pourquoi" class="tab-link">Page Pourquoi G2C</a>
+      <a href="#tab-admissions" class="tab-link">Admissions</a>
+      <a href="#tab-carriere" class="tab-link">Carrières</a>
+      <a href="#tab-contact" class="tab-link">Contact</a>
+
+      <!-- NOUVEL ONGLET PROJETS (COULEUR DIFFÉRENTE via .tab-link-projets) -->
+      <a href="#tab-projets" class="tab-link tab-link-projets">Projets</a>
+      <a href="{{ url_for('admin_projects') }}" class="tab-link tab-link-projets">Gérer les Projets</a>
+    </nav>
+
+    <!-- MESSAGES FLASH -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Formulaire global -->
+    <form method="POST">
+      {{ form.hidden_tag() }}
+
+      <!-- =============================
+           ONGLET 1: PAGE D’ACCUEIL
+           ============================= -->
+      <div id="tab-accueil" class="tab-content">
+        <h3>Modifier la Page d’Accueil</h3>
+
+        <!-- SECTION INFO -->
+        <fieldset>
+          <legend>Section Info</legend>
+          <div>
+            {{ form.ects.label }}<br>
+            {{ form.ects(size=40) }}
+          </div>
+          <div>
+            {{ form.duration.label }}<br>
+            {{ form.duration(size=40) }}
+          </div>
+          <div>
+            {{ form.institution.label }}<br>
+            {{ form.institution(size=40) }}
+          </div>
+          <div>
+            {{ form.diploma.label }}<br>
+            {{ form.diploma(size=40) }}
+          </div>
+          <div>
+            {{ form.capacity.label }}<br>
+            {{ form.capacity(size=40) }}
+          </div>
+          <div>
+            {{ form.study_mode.label }}<br>
+            {{ form.study_mode(size=40) }}
+          </div>
+        </fieldset>
+
+        <!-- SECTION PRÉSENTATION -->
+        <fieldset>
+          <legend>Présentation du Master</legend>
+          <div>
+            {{ form.presentation.label }}<br>
+            {{ form.presentation(rows=4, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- SECTION ENTREPRISES -->
+        <fieldset>
+          <legend>Entreprises</legend>
+          <div>
+            {{ form.trusted_title.label }}<br>
+            {{ form.trusted_title(size=60) }}
+          </div>
+          <div>
+            {{ form.trusted_desc.label }}<br>
+            {{ form.trusted_desc(rows=3, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- SECTION LOCALISATION -->
+        <fieldset>
+          <legend>Localisation</legend>
+          <div>
+            {{ form.map_title.label }}<br>
+            {{ form.map_title(size=60) }}
+          </div>
+          <div>
+            {{ form.map_address.label }}<br>
+            {{ form.map_address(size=60) }}
+          </div>
+        </fieldset>
+
+        <!-- SECTION TÉMOIGNAGES -->
+        <fieldset>
+          <legend>Témoignages</legend>
+          <div>
+            {{ form.testimonials_title.label }}<br>
+            {{ form.testimonials_title(size=60) }}
+          </div>
+          <div>
+            {{ form.testimonials_json.label }}<br>
+            {{ form.testimonials_json(rows=10, cols=60) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple Témoignages :</strong></p>
+            <textarea readonly rows="6" cols="60">[
+  {
+    "author": "Jean Dupont, Promotion 2022",
+    "text": "Une formation complète qui m'a ouvert les portes du monde professionnel."
+  },
+  {
+    "author": "Marie Martin, Promotion 2023",
+    "text": "L'alternance m'a permis d'acquérir une vraie expérience professionnelle."
+  }
+]</textarea>
+            <p style="font-size: 0.9rem; color: #666;">
+              Vous pouvez copier ce modèle et l'adapter à vos besoins.
+            </p>
+          </div>
+        </fieldset>
+
+        <!-- SECTION NEWS -->
+        <fieldset>
+          <legend>News</legend>
+          <div>
+            {{ form.news_json.label }}<br>
+            {{ form.news_json(rows=10, cols=60) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple News :</strong></p>
+            <textarea readonly rows="6" cols="60">[
+  {
+    "title": "Master G2C",
+    "text": "Ouverture des inscriptions 2024..."
+  },
+  {
+    "title": "Événement le 15 avril",
+    "text": "Rappel : ne manquez pas la journée portes ouvertes..."
+  },
+  {
+    "title": "Visite de l'entreprise partenaire",
+    "text": "Nouvelle visite prévue le 20 mai..."
+  }
+]</textarea>
+            <p style="font-size: 0.9rem; color: #666;">
+              Vous pouvez copier ce modèle et l'adapter à vos besoins.
+            </p>
+          </div>
+        </fieldset>
+
+        <!-- Bouton pour gérer les logos partenaires -->
+        <hr>
+        <a href="{{ url_for('admin_logos') }}" class="btn btn-secondary">
+          Gérer les logos partenaires
+        </a>
+      </div>
+      <!-- Fin onglet Accueil -->
+
+
+      <!-- =============================
+           ONGLET 2: PROGRAMME
+           ============================= -->
+      <div id="tab-programme" class="tab-content">
+        <h3>Modifier la Page Programme</h3>
+
+        <!-- TIMELINE (haut de page) -->
+        <fieldset>
+          <legend>Programme - Timeline (haut de page)</legend>
+          <p style="color:#666; font-size:0.9rem;">
+            Contenu de la Timeline (M1 S1, M1 S2, M2 S1, M2 S2).
+          </p>
+          <div style="margin-bottom:10px;">
+            <label><strong>M1 - S1 (timeline)</strong></label><br>
+            {{ form.m1s1_content(rows=3, cols=60) }}
+          </div>
+          <div style="margin-bottom:10px;">
+            <label><strong>M1 - S2 (timeline)</strong></label><br>
+            {{ form.m1s2_content(rows=3, cols=60) }}
+          </div>
+          <div style="margin-bottom:10px;">
+            <label><strong>M2 - S1 (timeline)</strong></label><br>
+            {{ form.m2s1_content(rows=3, cols=60) }}
+          </div>
+          <div style="margin-bottom:10px;">
+            <label><strong>M2 - S2 (timeline)</strong></label><br>
+            {{ form.m2s2_content(rows=3, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- SEMESTRES DÉTAILLÉS -->
+        <fieldset>
+          <legend>Programme - Semestres détaillés</legend>
+          <p style="font-size:0.9rem; color:#666;">
+            Vous pouvez coller ici du code HTML (listes &lt;ul&gt;/&lt;li&gt;, balises &lt;p&gt;, etc.)
+            pour conserver l'organisation visuelle actuelle.
+          </p>
+          <div class="json-example">
+            <p><strong>Exemple de code HTML (SEMESTRE 1) :</strong></p>
+            <textarea readonly rows="10" cols="80">
+<ul class="semester-list">
+  <li><strong>Maîtriser les fondamentaux</strong></li>
+  <ul>
+    <li>Pour les entrants :</li>
+    <ul>
+      <li>Maîtriser les mathématiques financières</li>
+      <li>Comprendre le fonctionnement des marchés financiers</li>
+      <li>Analyser les états financiers des entreprises</li>
+    </ul>
+    <li>Pour les anciens :</li>
+    <ul>
+      <li>Analyse financière</li>
+      <li>Challenge recherche</li>
+    </ul>
+  </ul>
+  <li><strong>Concevoir des opérations d’ingénierie financière (69h)</strong></li>
+  <ul>
+    <li>Réaliser des analyses d’entreprises</li>
+    <li>Maîtriser les techniques de la finance internationale</li>
+  </ul>
+</ul>
+            </textarea>
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple de code HTML (SEMESTRE 2) :</strong></p>
+            <textarea readonly rows="10" cols="80">
+<p>Le second semestre se déroule à l'étranger dans l'une de nos universités partenaires.</p>
+<ul class="semester-list" style="margin-left: 15%;">
+  <li>Cours spécialisés en finance internationale</li>
+  <li>Immersion culturelle et linguistique</li>
+  <li>Développement du réseau international</li>
+</ul>
+            </textarea>
+            <p style="font-size: 0.9rem; color:#666;">
+              Ici, on utilise un paragraphe (&lt;p&gt;) suivi d'une liste.
+              Vous pouvez personnaliser davantage.
+            </p>
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>M1 - S1 (détails)</strong></label><br>
+            {{ form.m1s1_detail(rows=10, cols=80) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>M1 - S2 (détails)</strong></label><br>
+            {{ form.m1s2_detail(rows=10, cols=80) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>M2 - S1 (détails)</strong></label><br>
+            {{ form.m2s1_detail(rows=10, cols=80) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>M2 - S2 (détails)</strong></label><br>
+            {{ form.m2s2_detail(rows=10, cols=80) }}
+          </div>
+        </fieldset>
+
+        <!-- PARTENARIATS D’EXCELLENCE -->
+        <fieldset>
+          <legend>Programme - Partenariats d'Excellence</legend>
+          <p style="font-size:0.9rem; color:#666;">
+            Entrez ici le HTML pour les blocs <strong>Partenariat Bloomberg</strong> 
+            et <strong>Programme partenaire CFA</strong>.
+          </p>
+          <div class="json-example">
+            <p><strong>Exemple pour PARTENARIAT BLOOMBERG :</strong></p>
+            <textarea readonly rows="12" cols="80">
+<h3 class="partnership-title">PARTENARIAT BLOOMBERG</h3>
+<p class="partnership-description">
+  Le Master G2C bénéficie d'un partenariat privilégié avec Bloomberg, 
+  leader mondial de l'information financière.
+  <br>
+  Les étudiants ont accès à la salle des marchés de l'IAE équipée de terminaux Bloomberg, 
+  leur permettant de :
+</p>
+<ul class="partnership-list">
+  <li>Se former sur la plateforme Bloomberg Terminal</li>
+  <li>Obtenir la certification Bloomberg Market Concepts (BMC)</li>
+  <li>Accéder aux données financières en temps réel</li>
+  <li>Réaliser des analyses de marché professionnelles</li>
+</ul>
+            </textarea>
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Partenariat Bloomberg (HTML)</strong></label><br>
+            {{ form.bloomberg_html(rows=10, cols=80) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple pour PROGRAMME PARTENAIRE CFA :</strong></p>
+            <textarea readonly rows="12" cols="80">
+<h3 class="partnership-title">PROGRAMME PARTENAIRE CFA</h3>
+<p class="partnership-description">
+  Le Master G2C est reconnu comme programme partenaire du CFA Institute, 
+  garantissant une formation alignée avec les standards internationaux les plus exigeants.
+</p>
+<ul class="partnership-list">
+  <li>Programme aligné avec le curriculum CFA</li>
+  <li>Bourses pour l'examen CFA</li>
+  <li>Accès aux ressources éducatives du CFA Institute</li>
+  <li>Reconnaissance internationale</li>
+</ul>
+            </textarea>
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Programme partenaire CFA (HTML)</strong></label><br>
+            {{ form.cfa_html(rows=10, cols=80) }}
+          </div>
+        </fieldset>
+
+        <!-- POINTS FORTS (Programme) -->
+        <fieldset>
+          <legend>Programme - Points Forts</legend>
+          <p style="font-size:0.9rem; color:#666;">
+            Saisissez ici le titre, le texte et l'icône (ex : 🏢, 🌍, 💼) de chaque bloc.
+          </p>
+          <!-- Bloc #1 -->
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #1 - Titre</strong></label><br>
+            {{ form.highlight1_title(size=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #1 - Texte</strong></label><br>
+            {{ form.highlight1_text(rows=4, cols=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #1 - Icône</strong></label><br>
+            {{ form.highlight1_icon(size=5) }}
+          </div>
+
+          <!-- Bloc #2 -->
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #2 - Titre</strong></label><br>
+            {{ form.highlight2_title(size=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #2 - Texte</strong></label><br>
+            {{ form.highlight2_text(rows=4, cols=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #2 - Icône</strong></label><br>
+            {{ form.highlight2_icon(size=5) }}
+          </div>
+
+          <!-- Bloc #3 -->
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #3 - Titre</strong></label><br>
+            {{ form.highlight3_title(size=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #3 - Texte</strong></label><br>
+            {{ form.highlight3_text(rows=4, cols=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Points forts #3 - Icône</strong></label><br>
+            {{ form.highlight3_icon(size=5) }}
+          </div>
+        </fieldset>
+      </div>
+      <!-- Fin onglet Programme -->
+
+
+      <!-- =============================
+           ONGLET 3: POURQUOI G2C
+           ============================= -->
+      <div id="tab-pourquoi" class="tab-content">
+        <h3>Modifier la Page Pourquoi G2C</h3>
+
+        <!-- FORCES DU MASTER -->
+        <fieldset>
+          <legend>Forces du Master (3 blocs)</legend>
+          <p style="font-size:0.9rem; color:#666;">
+            Insérez un tableau JSON décrivant chaque bloc (ex. icon, title, text).
+          </p>
+          <div class="json-example">
+            <p><strong>Exemple JSON :</strong></p>
+            <textarea readonly rows="8" cols="80">[
+  {
+    "icon": "🏆",
+    "title": "Excellence Académique",
+    "text": "Programme reconnu et accrédité..."
+  },
+  {
+    "icon": "📈",
+    "title": "Perspectives Professionnelles",
+    "text": "Débouchés variés dans des secteurs porteurs..."
+  },
+  {
+    "icon": "👥",
+    "title": "Réseau Professionnel",
+    "text": "Accès à un réseau d'alumni et de professionnels reconnus..."
+  }
+]</textarea>
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Forces du Master (JSON)</strong></label><br>
+            {{ form.forces_json(rows=10, cols=80) }}
+          </div>
+        </fieldset>
+
+        <!-- CLASSEMENT -->
+        <fieldset>
+          <legend>Classement (Titre, icône, rang, etc.)</legend>
+          <p style="font-size:0.9rem; color:#666;">
+            Paramètres de la section Classement (ex: "Classement 2024", "🏆", "2e", etc.).
+          </p>
+          <div style="margin-bottom:15px;">
+            <label><strong>Classement - Titre</strong></label><br>
+            {{ form.ranking_title(size=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Classement - Icône (ex: 🏆)</strong></label><br>
+            {{ form.ranking_icon(size=5) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Classement - Rang (ex: 2e)</strong></label><br>
+            {{ form.ranking_rank(size=10) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Classement - Sous-titre</strong></label><br>
+            {{ form.ranking_subtitle(size=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Classement - Description</strong></label><br>
+            {{ form.ranking_description(rows=4, cols=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Classement - Bouton (texte)</strong></label><br>
+            {{ form.ranking_button_text(size=40) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Classement - Bouton (lien)</strong></label><br>
+            {{ form.ranking_button_link(size=60) }}
+          </div>
+        </fieldset>
+
+        <!-- KEY POINTS (Chiffres Clés et Points Forts) -->
+        <fieldset>
+          <legend>Key Points (Chiffres Clés et Points Forts)</legend>
+          <p style="font-size:0.9rem; color:#666;">
+            Saisissez ici deux JSON distincts :
+            <br>- Stats : tableau d'objets { "value": "...", "label": "..." }
+            <br>- Points Forts : tableau de chaînes.
+          </p>
+          <div class="json-example">
+            <p><strong>Exemple Stats (JSON) :</strong></p>
+            <textarea readonly rows="10" cols="80">[
+  { "value": "95%",  "label": "Taux d'insertion" },
+  { "value": "45k€", "label": "Salaire moyen" },
+  { "value": "100+", "label": "Entreprises partenaires" },
+  { "value": "92%",  "label": "Satisfaction" }
+]</textarea>
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Key Points - Stats (JSON)</strong></label><br>
+            {{ form.keypoints_stats_json(rows=10, cols=80) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple Points Forts (JSON) :</strong></p>
+            <textarea readonly rows="6" cols="80">[
+  "Semestre Erasmus garanti",
+  "Année de césure possible",
+  "Stage M2 de 6 mois minimum",
+  "Spécialisation dès le M1"
+]</textarea>
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Key Points - Points Forts (JSON)</strong></label><br>
+            {{ form.keypoints_forts_json(rows=6, cols=80) }}
+          </div>
+        </fieldset>
+
+        <!-- PROJETS UNIVERSITAIRES -->
+        <fieldset>
+          <legend>Projets Universitaires</legend>
+          <p style="font-size:0.9rem; color:#666;">
+            Modifiez le titre, la description et le texte du bouton de la section Projets Universitaires.
+          </p>
+          <div style="margin-bottom:15px;">
+            <label><strong>Titre - Projets Universitaires</strong></label><br>
+            {{ form.projects_title(size=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Description - Projets Universitaires</strong></label><br>
+            {{ form.projects_text(rows=4, cols=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Bouton - Projets Universitaires</strong></label><br>
+            {{ form.projects_button(size=40) }}
+          </div>
+        </fieldset>
+
+        <!-- SEMESTRE À L'ÉTRANGER -->
+        <fieldset>
+          <legend>Semestre à l'étranger</legend>
+          <p style="font-size:0.9rem; color:#666;">
+            Modifiez le titre, la description et le texte du bouton de la section Semestre à l'étranger.
+          </p>
+          <div style="margin-bottom:15px;">
+            <label><strong>Titre - Semestre à l'étranger</strong></label><br>
+            {{ form.semester_title(size=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Description - Semestre à l'étranger</strong></label><br>
+            {{ form.semester_text(rows=4, cols=60) }}
+          </div>
+          <div style="margin-bottom:15px;">
+            <label><strong>Bouton - Semestre à l'étranger</strong></label><br>
+            {{ form.semester_button(size=40) }}
+          </div>
+        </fieldset>
+      </div>
+      <!-- Fin onglet Pourquoi G2C -->
+
+
+      <!-- =============================
+           ONGLET 4: ADMISSIONS
+           ============================= -->
+      <div id="tab-admissions" class="tab-content">
+        <h3>Modifier la Page Admissions</h3>
+
+        <!-- EN-TÊTE -->
+        <fieldset>
+          <legend>En-tête</legend>
+          <div>
+            {{ form.admissions_header_title.label }}<br>
+            {{ form.admissions_header_title(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_header_subtitle.label }}<br>
+            {{ form.admissions_header_subtitle(rows=4, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- PROCESSUS D'ADMISSION -->
+        <fieldset>
+          <legend>Processus d'admission</legend>
+          <div>
+            {{ form.admissions_process_title.label }}<br>
+            {{ form.admissions_process_title(size=60) }}
+          </div>
+
+          <!-- Phase 1 -->
+          <div>
+            {{ form.admissions_phase1_title.label }}<br>
+            {{ form.admissions_phase1_title(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_phase1_period.label }}<br>
+            {{ form.admissions_phase1_period(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_phase1_details.label }}<br>
+            {{ form.admissions_phase1_details(rows=6, cols=60) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple Détails Phase 1 (JSON) :</strong></p>
+            <textarea readonly rows="6" cols="60">[
+  "Création du dossier en ligne",
+  "Upload des documents requis",
+  "Validation de la candidature"
+]</textarea>
+          </div>
+
+          <!-- Phase 2 -->
+          <div>
+            {{ form.admissions_phase2_title.label }}<br>
+            {{ form.admissions_phase2_title(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_phase2_period.label }}<br>
+            {{ form.admissions_phase2_period(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_phase2_details.label }}<br>
+            {{ form.admissions_phase2_details(rows=6, cols=60) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple Détails Phase 2 (JSON) :</strong></p>
+            <textarea readonly rows="6" cols="60">[
+  "Analyse du parcours académique",
+  "Évaluation des compétences",
+  "Présélection des candidats"
+]</textarea>
+          </div>
+
+          <!-- Phase 3 -->
+          <div>
+            {{ form.admissions_phase3_title.label }}<br>
+            {{ form.admissions_phase3_title(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_phase3_period.label }}<br>
+            {{ form.admissions_phase3_period(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_phase3_details.label }}<br>
+            {{ form.admissions_phase3_details(rows=6, cols=60) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple Détails Phase 3 (JSON) :</strong></p>
+            <textarea readonly rows="6" cols="60">[
+  "Entretien de motivation",
+  "Test d'anglais",
+  "Étude de cas"
+]</textarea>
+          </div>
+
+          <!-- Phase 4 -->
+          <div>
+            {{ form.admissions_phase4_title.label }}<br>
+            {{ form.admissions_phase4_title(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_phase4_period.label }}<br>
+            {{ form.admissions_phase4_period(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_phase4_details.label }}<br>
+            {{ form.admissions_phase4_details(rows=6, cols=60) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple Détails Phase 4 (JSON) :</strong></p>
+            <textarea readonly rows="6" cols="60">[
+  "Annonce des admissions",
+  "Confirmation d'inscription",
+  "Finalisation du dossier"
+]</textarea>
+          </div>
+        </fieldset>
+
+        <!-- PRÉREQUIS -->
+        <fieldset>
+          <legend>Prérequis</legend>
+          <div>
+            {{ form.admissions_requirements_title.label }}<br>
+            {{ form.admissions_requirements_title(size=60) }}
+          </div>
+        </fieldset>
+
+        <!-- OUTILS D'ENTRAÎNEMENT -->
+        <fieldset>
+          <legend>Outils d'entraînement</legend>
+          <div>
+            {{ form.admissions_training_title.label }}<br>
+            {{ form.admissions_training_title(size=60) }}
+          </div>
+          <div>
+            {{ form.admissions_training_cards.label }}<br>
+            {{ form.admissions_training_cards(rows=6, cols=60) }}
+          </div>
+          <div class="json-example">
+            <p><strong>Exemple Cartes (JSON) :</strong></p>
+            <textarea readonly rows="6" cols="60">[
+  {
+    "icon": "📝",
+    "title": "Préparer l'entretien",
+    "text": "Accédez à des conseils et ressources..."
+  },
+  {
+    "icon": "📚",
+    "title": "Réviser les fondamentaux",
+    "text": "Mettez à jour vos connaissances en finance..."
+  }
+]</textarea>
+          </div>
+          <div>
+            {{ form.admissions_training_button_text.label }}<br>
+            {{ form.admissions_training_button_text(size=40) }}
+          </div>
+          <div>
+            {{ form.admissions_training_button_link.label }}<br>
+            {{ form.admissions_training_button_link(size=60) }}
+          </div>
+        </fieldset>
+      </div>
+      <!-- Fin onglet Admissions -->
+
+
+      <!-- =============================
+           ONGLET 5: CARRIÈRES
+           ============================= -->
+      <div id="tab-carriere" class="tab-content">
+        <h3>Modifier la Page Carrières</h3>
+
+        <!-- SECTION HERO -->
+        <fieldset>
+          <legend>En-tête (Hero)</legend>
+          <div>
+            {{ form.career_hero_title.label }}<br>
+            {{ form.career_hero_title(size=60) }}
+          </div>
+          <div>
+            {{ form.career_hero_subtitle.label }}<br>
+            {{ form.career_hero_subtitle(rows=4, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- MÉTIERS -->
+        <fieldset>
+          <legend>Métiers</legend>
+          <div>
+            {{ form.career_jobs_title.label }}<br>
+            {{ form.career_jobs_title(size=60) }}
+          </div>
+          <div>
+            {{ form.career_jobs_json.label }}<br>
+            {{ form.career_jobs_json(rows=10, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- STATISTIQUES -->
+        <fieldset>
+          <legend>Statistiques</legend>
+          <div>
+            {{ form.career_stats_title.label }}<br>
+            {{ form.career_stats_title(size=60) }}
+          </div>
+          <div>
+            {{ form.career_stats_json.label }}<br>
+            {{ form.career_stats_json(rows=10, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- VIDÉO -->
+        <fieldset>
+          <legend>Vidéo</legend>
+          <div>
+            {{ form.career_video_title.label }}<br>
+            {{ form.career_video_title(size=60) }}
+          </div>
+          <div>
+            {{ form.career_video_url.label }}<br>
+            {{ form.career_video_url(size=60) }}
+          </div>
+        </fieldset>
+
+        <!-- CTA (Call to Action) -->
+        <fieldset>
+          <legend>CTA (Call to Action)</legend>
+          <div>
+            {{ form.career_cta_title.label }}<br>
+            {{ form.career_cta_title(size=60) }}
+          </div>
+          <div>
+            {{ form.career_cta_description.label }}<br>
+            {{ form.career_cta_description(rows=4, cols=60) }}
+          </div>
+          <div>
+            {{ form.career_cta_button_text.label }}<br>
+            {{ form.career_cta_button_text(size=40) }}
+          </div>
+          <div>
+            {{ form.career_cta_button_link.label }}<br>
+            {{ form.career_cta_button_link(size=60) }}
+          </div>
+        </fieldset>
+      </div>
+      <!-- Fin onglet Carrières -->
+
+
+      <!-- =============================
+           ONGLET 6: CONTACT
+           ============================= -->
+      <div id="tab-contact" class="tab-content">
+        <h3>Modifier la Page Contact</h3>
+
+        <!-- HERO -->
+        <fieldset>
+          <legend>En-tête (Hero)</legend>
+          <div>
+            {{ form.contact_hero_title.label }}<br>
+            {{ form.contact_hero_title(size=60) }}
+          </div>
+          <div>
+            {{ form.contact_hero_subtitle.label }}<br>
+            {{ form.contact_hero_subtitle(rows=4, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- FORMULAIRE -->
+        <fieldset>
+          <legend>Formulaire</legend>
+          <div>
+            {{ form.contact_form_title.label }}<br>
+            {{ form.contact_form_title(size=60) }}
+          </div>
+        </fieldset>
+
+        <!-- INFORMATIONS DE CONTACT -->
+        <fieldset>
+          <legend>Informations de Contact</legend>
+          <div>
+            {{ form.contact_info_title.label }}<br>
+            {{ form.contact_info_title(size=60) }}
+          </div>
+          <div>
+            {{ form.contact_info_json.label }}<br>
+            {{ form.contact_info_json(rows=6, cols=60) }}
+          </div>
+        </fieldset>
+
+        <!-- MAP -->
+        <fieldset>
+          <legend>Carte (Google Maps)</legend>
+          <div>
+            {{ form.contact_map_title.label }}<br>
+            {{ form.contact_map_title(size=60) }}
+          </div>
+          <div>
+            {{ form.contact_map_address.label }}<br>
+            {{ form.contact_map_address(rows=2, cols=60) }}
+          </div>
+          <div>
+            {{ form.contact_map_iframe.label }}<br>
+            {{ form.contact_map_iframe(rows=4, cols=60) }}
+          </div>
+        </fieldset>
+      </div>
+      <!-- Fin onglet Contact -->
+
+
+      <!-- =============================
+           NOUVEL ONGLET : PROJETS
+           ============================= -->
+      <div id="tab-projets" class="tab-content">
+        <h3>Modifier la Page Projets</h3>
+
+        <fieldset>
+          <legend>Projets Universitaires</legend>
+          <div>
+            {{ form.projects_title.label }}<br>
+            {{ form.projects_title(size=60) }}
+          </div>
+          <div>
+            {{ form.projects_text.label }}<br>
+            {{ form.projects_text(rows=4, cols=60) }}
+          </div>
+          <div>
+            {{ form.projects_button.label }}<br>
+            {{ form.projects_button(size=40) }}
+          </div>
+          <div>
+            {{ form.projects_details.label }}<br>
+            {{ form.projects_details(rows=10, cols=80) }}
+          </div>
+        </fieldset>
+
+      </div>
+      <!-- Fin onglet Projets -->
+
+
+      <!-- BOUTON ENREGISTRER -->
+      <hr>
+      <div style="margin-top: 20px;">
+        {{ form.submit(class="btn btn-primary") }}
+      </div>
+
+    </form>
+  </div>
+</main>
+{% endblock %}

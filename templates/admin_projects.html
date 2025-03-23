@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Gestion des Projets{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Gestion des Projets</h1>
+  <a href="{{ url_for('new_project') }}" class="btn btn-primary" style="margin-bottom: 15px;">
+    Ajouter un projet
+  </a>
+  <hr>
+  {% if projects %}
+    {% for proj in projects %}
+      <div class="project-item" style="margin-bottom: 20px;">
+        <h3>{{ proj.title }} ({{ proj.year }})</h3>
+        {% if proj.images %}
+          <div class="project-images">
+            {% for img in proj.images %}
+              <img src="{{ url_for('static', filename='media/' ~ img) }}"
+                   alt="{{ proj.title }}"
+                   style="max-width: 200px; margin-bottom: 10px;">
+            {% endfor %}
+          </div>
+        {% endif %}
+        <p>{{ proj.description }}</p>
+        {% if proj.link %}
+          <p>Lien : <a href="{{ proj.link }}" target="_blank">{{ proj.link }}</a></p>
+        {% endif %}
+        {% if proj.students %}
+          <div class="project-students">
+            <h4>Étudiant(s) :</h4>
+            <ul style="list-style:none; padding:0;">
+              {% for st in proj.students %}
+                <li style="margin-bottom:10px;">
+                  {% if st.photo %}
+                    <img src="{{ url_for('static', filename='media/' ~ st.photo) }}"
+                         alt="{{ st.name }}"
+                         style="max-width: 60px; border-radius: 50%; margin-right: 10px;">
+                  {% endif %}
+                  <span>{{ st.name }}</span>
+                  {% if st.linkedin %}
+                    (<a href="{{ st.linkedin }}" target="_blank">LinkedIn</a>)
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        <a href="{{ url_for('edit_project', proj_id=proj.id) }}" class="btn btn-sm btn-secondary">
+          Modifier
+        </a>
+        <form action="{{ url_for('delete_project', proj_id=proj.id) }}" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce projet ?');">
+            Supprimer
+          </button>
+        </form>
+      </div>
+      <hr>
+    {% endfor %}
+  {% else %}
+    <p>Aucun projet pour le moment.</p>
+  {% endif %}
+</div>
+{% endblock %}

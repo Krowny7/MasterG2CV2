@@ -1,0 +1,52 @@
+/* static/css/semester.css */
+
+/* Section Hero */
+.semester-hero {
+    background: url("../media/semester-hero.jpg") center/cover no-repeat;
+    padding: 80px 20px;
+    text-align: center;
+    color: #fff;
+  }
+  .semester-hero .container {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    border-radius: 8px;
+  }
+  .semester-hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+  }
+  .semester-hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Section Détails */
+  .semester-details {
+    padding: 40px 20px;
+    background: #f8f9fa;
+    color: #333;
+  }
+  .semester-details .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .semester-details h2 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 2rem;
+  }
+  .semester-details h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+  }
+  .semester-details p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  .semester-details ul {
+    list-style: disc;
+    margin-left: 20px;
+  }
+  

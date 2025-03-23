@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}
+Pourquoi - Master G2C
+{% endblock %}
+
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pourquoi.css') }}">
+{% endblock %}
+
+{% block content %}
+<header class="page-header">
+    <div class="container">
+        <h1>Pourquoi Choisir le Master G2C ?</h1>
+        <p>Une formation d'excellence pour les futurs experts de la finance, combinant expertise théorique et pratique professionnelle.</p>
+    </div>
+</header>
+
+<!-- SECTION : LES FORCES DU MASTER (Dynamique) -->
+<section class="section" id="forces-section">
+    <h2 class="section-title">Les forces du Master</h2>
+    <div class="highlights-container">
+        {% if homepage_content.why_section and homepage_content.why_section.forces %}
+            {% for bloc in homepage_content.why_section.forces %}
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <span>{{ bloc.icon }}</span>
+                    </div>
+                    <h3 class="highlight-title">{{ bloc.title }}</h3>
+                    <p class="highlight-description">{{ bloc.text }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Aucune force du Master définie.</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- SECTION : CLASSEMENT (Dynamique) -->
+<section class="section classement-section">
+    {% set ranking = homepage_content.why_section.ranking if (homepage_content.why_section and homepage_content.why_section.ranking) else None %}
+    {% if ranking %}
+      <h2 class="section-title">{{ ranking.title or "Classement" }}</h2>
+      <div class="classement-card visible">
+          <div class="classement-icon">
+              <span>{{ ranking.icon or "🏆" }}</span>
+          </div>
+          <div class="classement-details">
+              <h3 class="classement-rank">{{ ranking.rank or "2e" }}</h3>
+              <p class="classement-title">{{ ranking.subtitle or "Meilleurs Masters" }}</p>
+              <p class="classement-description">
+                {{ ranking.description or "Masters Gestion des Risques Financiers & Conformité" }}
+              </p>
+          </div>
+          <a href="{{ ranking.button_link or "#" }}" target="_blank" class="button-standard">
+            {{ ranking.button_text or "Voir le classement complet" }}
+          </a>
+      </div>
+    {% else %}
+      <h2 class="section-title">Classement (non défini)</h2>
+      <p>Aucune donnée pour le classement.</p>
+    {% endif %}
+</section>
+
+<!-- SECTION : KEY POINTS (Dynamique) -->
+<section class="key-points-section">
+    <h2 class="section-title">Chiffres Clés et Points Forts</h2>
+    {% set kp = homepage_content.why_section.key_points if (homepage_content.why_section and homepage_content.why_section.key_points) else None %}
+    {% if kp %}
+      <div class="key-points-card">
+        <div class="key-points-container">
+          <!-- Stats -->
+          <div class="key-stats">
+            {% for stat in kp.stats %}
+              <div class="stat2">
+                <span class="stat-value">{{ stat.value }}</span>
+                <span class="stat-label">{{ stat.label }}</span>
+              </div>
+            {% endfor %}
+          </div>
+          <!-- Points Forts -->
+          <div class="key-strengths">
+            <h3 class="strengths-title">Points Forts</h3>
+            <ul class="strengths-list">
+              {% for item in kp.forts %}
+                <li><span class="check-icon">✔</span> {{ item }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p>Aucune donnée pour Key Points.</p>
+    {% endif %}
+</section>
+
+<!-- SECTION : PROJETS UNIVERSITAIRES -->
+<section class="section" id="project-section">
+    <h2 class="section-title" id="project-title">
+      {% if homepage_content.why_section and homepage_content.why_section.project_section and homepage_content.why_section.project_section.title %}
+         {{ homepage_content.why_section.project_section.title }}
+      {% else %}
+         Projets Universitaires
+      {% endif %}
+    </h2>
+    <div class="highlights-container" id="project-container">
+        <div class="highlight-card" id="project-text-card">
+            <h3 class="highlight-title" id="project-text-title">
+                {% if homepage_content.why_section and homepage_content.why_section.project_section and homepage_content.why_section.project_section.title %}
+                  {{ homepage_content.why_section.project_section.title }}
+                {% else %}
+                  Projets Innovants
+                {% endif %}
+            </h3>
+            <p class="highlight-description" id="project-description">
+                {% if homepage_content.why_section and homepage_content.why_section.project_section and homepage_content.why_section.project_section.text %}
+                  {{ homepage_content.why_section.project_section.text|replace('\n','<br>')|safe }}
+                {% else %}
+                  Durant les deux années de formation, les étudiants développent des solutions financières innovantes...
+                {% endif %}
+            </p>
+            <button class="button-standard" id="robot-button" style="margin-bottom: 10px;">
+                {% if homepage_content.why_section and homepage_content.why_section.project_section and homepage_content.why_section.project_section.button %}
+                  {{ homepage_content.why_section.project_section.button }}
+                {% else %}
+                  Voir les projets
+                {% endif %}
+            </button>
+        </div>
+        <div class="highlight-card-robot" id="project-3d-card">
+            <!-- Nouveau conteneur pour le robot -->
+            <div id="robot-container" style="width:300px; height:300px; margin:0 auto;"></div>
+        
+            <div id="images-container">
+                <img src="{{ url_for('static', filename='media/logo-excel.png') }}" alt="Excel" class="tech-image">
+                <img src="{{ url_for('static', filename='media/logo-python.png') }}" alt="Python" class="tech-image">
+            </div>
+        </div>
+        
+    </div>
+</section>
+<!-- SECTION : SEMESTRE À L'ÉTRANGER -->
+<section class="section" id="semester-section">
+    <h2 class="section-title" id="semester-title">
+      {% if homepage_content.why_section and homepage_content.why_section.semester_section and homepage_content.why_section.semester_section.title %}
+         {{ homepage_content.why_section.semester_section.title }}
+      {% else %}
+         Semestre à l'étranger
+      {% endif %}
+    </h2>
+    <div class="highlights-container" id="semester-container">
+      <div class="highlight-card-3d" id="semester-3d-card">
+        <!-- Nouveau conteneur pour le globe 3D via globe.js -->
+        <div id="custom-globe-container" style="width:400px; height:400px; margin:0 auto;"></div>
+      </div>
+      <div class="highlight-card" id="semester-text-card">
+        <h3 class="highlight-title" id="semester-text-title">
+          {% if homepage_content.why_section and homepage_content.why_section.semester_section and homepage_content.why_section.semester_section.title %}
+            {{ homepage_content.why_section.semester_section.title }}
+          {% else %}
+            Semestre à l'étranger
+          {% endif %}
+        </h3>
+        <p class="highlight-description" id="semester-description">
+          {% if homepage_content.why_section and homepage_content.why_section.semester_section and homepage_content.why_section.semester_section.text %}
+            {{ homepage_content.why_section.semester_section.text|replace('\n','<br>')|safe }}
+          {% else %}
+            Le programme international du Master G2C de l'IAE de Caen permet aux étudiants de réaliser...
+          {% endif %}
+        </p>
+        <button class="button-standard" id="robot-button" style="margin-bottom: 10px;">
+          {% if homepage_content.why_section and homepage_content.why_section.semester_section and homepage_content.why_section.semester_section.button %}
+            {{ homepage_content.why_section.semester_section.button }}
+          {% else %}
+            Le semestre à l'étranger
+          {% endif %}
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Juste avant </main>, par exemple -->
+<section class="cta-section">
+    <h2 class="cta-title">PRÊT À NOUS REJOINDRE ?</h2>
+    <p class="cta-subtext">Découvrez le processus d’admission et postulez dès maintenant</p>
+    <a href="/admissions" class="button-standard cta-button">Candidater</a>
+  </section>
+  
+
+
+
+{% endblock %}

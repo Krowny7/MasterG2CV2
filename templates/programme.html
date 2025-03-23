@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block title %}
+Programme - Master G2C
+{% endblock %}
+
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/programme.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+  <!-- ========= HEADER ========= -->
+  <header class="page-header">
+    <div class="container">
+      <h1>Programme du Master G2C</h1>
+      <p>Formation d'excellence en Gestion d'Actifs, Contrôle des Risques et Conformité</p>
+    </div>
+  </header>
+
+  <!-- ========= TIMELINE (Dynamique) ========= -->
+  <section class="section">
+    <!-- Image de la bibliothèque -->
+    <div class="hero-image-container">
+        <img class="library-image" src="{{ url_for('static', filename='media/bibliotheque.jpg') }}" alt="Bibliothèque Universitaire">
+      </div>      
+
+
+    <h2 class="section-title">Déroulement du Master</h2>
+    <div class="timeline-container">
+
+      <!-- M1-S1 -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>M1 - S1</h4>
+          {% set m1s1_text = homepage_content.programme_section.m1s1 if homepage_content.programme_section else "" %}
+          <p>{{ m1s1_text|replace('\n','<br>')|safe if m1s1_text else "Cours en France" }}</p>
+        </div>
+      </div>
+
+      <!-- M1-S2 -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>M1 - S2</h4>
+          {% set m1s2_text = homepage_content.programme_section.m1s2 if homepage_content.programme_section else "" %}
+          <p>{{ m1s2_text|replace('\n','<br>')|safe if m1s2_text else "Semestre à l'étranger" }}</p>
+        </div>
+      </div>
+
+      <!-- Année de césure (statique) -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>Année de césure (optionnelle)</h4>
+          <p>2 stages de 6 mois</p>
+        </div>
+      </div>
+
+      <!-- M2-S1 -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>M2 - S1</h4>
+          {% set m2s1_text = homepage_content.programme_section.m2s1 if homepage_content.programme_section else "" %}
+          <p>{{ m2s1_text|replace('\n','<br>')|safe if m2s1_text else "Cours en France" }}</p>
+        </div>
+      </div>
+
+      <!-- M2-S2 -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>M2 - S2</h4>
+          {% set m2s2_text = homepage_content.programme_section.m2s2 if homepage_content.programme_section else "" %}
+          <p>{{ m2s2_text|replace('\n','<br>')|safe if m2s2_text else "Stage final" }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= SEMESTRES (Dynamique) ========= -->
+  <section class="section">
+    <h2 class="section-title">Master 1 - Fondamentaux</h2>
+    <div class="semester-container">
+
+      <!-- M1-S1 (détails) -->
+      <div class="semester-card">
+        <h3 class="semester-title">Semestre 1 - M1 - S1</h3>
+        {% set m1s1_detail = homepage_content.programme_section.m1s1_detail if homepage_content.programme_section else "" %}
+        {% if m1s1_detail %}
+          {{ m1s1_detail|safe }}
+        {% else %}
+          <!-- Fallback statique -->
+          <ul class="semester-list">
+            <li><strong>Maîtriser les fondamentaux</strong></li>
+            <!-- etc. -->
+          </ul>
+        {% endif %}
+      </div>
+
+      <!-- M1-S2 (détails) -->
+      <div class="semester-card">
+        <h3 class="semester-title">Semestre 2 - M1 - S2</h3>
+        {% set m1s2_detail = homepage_content.programme_section.m1s2_detail if homepage_content.programme_section else "" %}
+        {% if m1s2_detail %}
+          {{ m1s2_detail|safe }}
+        {% else %}
+          <p>Le second semestre se déroule à l'étranger...</p>
+          <!-- etc. -->
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Master 2 - Spécialisation</h2>
+    <div class="semester-container">
+      <!-- M2-S1 (détails) -->
+      <div class="semester-card">
+        <h3 class="semester-title">Semestre 1 - M2 - S1</h3>
+        {% set m2s1_detail = homepage_content.programme_section.m2s1_detail if homepage_content.programme_section else "" %}
+        {% if m2s1_detail %}
+          {{ m2s1_detail|safe }}
+        {% else %}
+          <!-- Fallback statique -->
+          <ul class="semester-list">
+            <li><strong>Réfléchir et élaborer la stratégie d’un établissement financier</strong></li>
+            <!-- etc. -->
+          </ul>
+        {% endif %}
+      </div>
+
+      <!-- M2-S2 (détails) -->
+      <div class="semester-card">
+        <h3 class="semester-title">Semestre 2 - M2 - S2</h3>
+        {% set m2s2_detail = homepage_content.programme_section.m2s2_detail if homepage_content.programme_section else "" %}
+        {% if m2s2_detail %}
+          {{ m2s2_detail|safe }}
+        {% else %}
+          <p>Stage de fin d’études de 6 mois en entreprise</p>
+          <!-- etc. -->
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= PARTENARIATS (Dynamique) ========= -->
+  <section class="section" id="partnership-section">
+    <h2 class="section-title">Nos Partenariats d'Excellence</h2>
+    <div class="partnership-container">
+
+      <!-- Bloomberg -->
+      <div class="partnership-card">
+        <img class="partnership-image" src="{{ url_for('static', filename='media/fondbloomberg.jpg') }}" alt="Partenariat Bloomberg">
+        <div class="partnership-content">
+          {% set bloomberg_html = homepage_content.programme_section.bloomberg_html if homepage_content.programme_section else "" %}
+          {% if bloomberg_html %}
+            {{ bloomberg_html|safe }}
+          {% else %}
+            <!-- Fallback -->
+            <h3 class="partnership-title">Partenariat Bloomberg</h3>
+            <p class="partnership-description">
+              Le Master G2C bénéficie d'un partenariat privilégié avec Bloomberg...
+            </p>
+            <ul class="partnership-list">
+              <li>Accès à la salle des marchés</li>
+              <li>Certification BMC</li>
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- CFA -->
+      <div class="partnership-card">
+        <img class="partnership-image" src="{{ url_for('static', filename='media/fondcfa.png') }}" alt="Partenaire CFA">
+        <div class="partnership-content">
+          {% set cfa_html = homepage_content.programme_section.cfa_html if homepage_content.programme_section else "" %}
+          {% if cfa_html %}
+            {{ cfa_html|safe }}
+          {% else %}
+            <!-- Fallback -->
+            <h3 class="partnership-title">Programme partenaire CFA</h3>
+            <p class="partnership-description">
+              Le Master G2C est reconnu comme programme partenaire du CFA Institute...
+            </p>
+            <ul class="partnership-list">
+              <li>Programme aligné avec le curriculum CFA</li>
+              <li>Bourses pour l'examen CFA</li>
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- ========= POINTS FORTS (Dynamique) ========= -->
+    <section class="section" id="points-forts-section">
+      <h2 class="section-title">Points Forts du Programme</h2>
+      <div class="highlights-container">
+        {% set h1_title = homepage_content.programme_section.highlight1_title if homepage_content.programme_section else "" %}
+        {% set h1_text  = homepage_content.programme_section.highlight1_text  if homepage_content.programme_section else "" %}
+        {% set h1_icon  = homepage_content.programme_section.highlight1_icon  if homepage_content.programme_section else "" %}
+        {% set h2_title = homepage_content.programme_section.highlight2_title if homepage_content.programme_section else "" %}
+        {% set h2_text  = homepage_content.programme_section.highlight2_text  if homepage_content.programme_section else "" %}
+        {% set h2_icon  = homepage_content.programme_section.highlight2_icon  if homepage_content.programme_section else "" %}
+        {% set h3_title = homepage_content.programme_section.highlight3_title if homepage_content.programme_section else "" %}
+        {% set h3_text  = homepage_content.programme_section.highlight3_text  if homepage_content.programme_section else "" %}
+        {% set h3_icon  = homepage_content.programme_section.highlight3_icon  if homepage_content.programme_section else "" %}
+  
+        <!-- Card #1 -->
+        <div class="highlight-card">
+          <div class="highlight-icon">
+            {% if h1_icon %}
+              <span>{{ h1_icon }}</span>
+            {% else %}
+              <span>🏢</span>
+            {% endif %}
+          </div>
+          <h3 class="highlight-title">
+            {% if h1_title %}{{ h1_title }}{% else %}Partenariats Prestigieux{% endif %}
+          </h3>
+          <p class="highlight-description">
+            {% if h1_text %}{{ h1_text }}{% else %}
+              Bloomberg et CFA Institute comme partenaires stratégiques pour une formation d'excellence.
+            {% endif %}
+          </p>
+        </div>
+  
+        <!-- Card #2 -->
+        <div class="highlight-card">
+          <div class="highlight-icon">
+            {% if h2_icon %}
+              <span>{{ h2_icon }}</span>
+            {% else %}
+              <span>🌍</span>
+            {% endif %}
+          </div>
+          <h3 class="highlight-title">
+            {% if h2_title %}{{ h2_title }}{% else %}Dimension Internationale{% endif %}
+          </h3>
+          <p class="highlight-description">
+            {% if h2_text %}{{ h2_text }}{% else %}
+              Un semestre à l'étranger et des opportunités de stages internationaux.
+            {% endif %}
+          </p>
+        </div>
+  
+        <!-- Card #3 -->
+        <div class="highlight-card">
+          <div class="highlight-icon">
+            {% if h3_icon %}
+              <span>{{ h3_icon }}</span>
+            {% else %}
+              <span>💼</span>
+            {% endif %}
+          </div>
+          <h3 class="highlight-title">
+            {% if h3_title %}{{ h3_title }}{% else %}Professionnalisation{% endif %}
+          </h3>
+          <p class="highlight-description">
+            {% if h3_text %}{{ h3_text }}{% else %}
+              18 mois de stages sur 3 ans pour une expérience professionnelle significative.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- SECTION CTA -->
+  <div class="container">
+    <section class="section cta-section">
+      <h2 class="section-title cta-title">PRÊT À NOUS REJOINDRE ?</h2>
+      <p class="highlight-description cta-subtext">
+        Découvrez le processus d’admission et postulez dès maintenant
+      </p>
+      <a href="/admissions" class="button-standard cta-button">Candidater</a>
+    </section>
+  </div>
+    
+</main>
+{% endblock %}
